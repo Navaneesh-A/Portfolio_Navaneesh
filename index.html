@@ -1,25 +1,27 @@
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <!-- =================================================================== -->
-    <!-- [EDIT HERE]: BROWSER TAB TITLE & META TAGS                          -->
-    <!-- =================================================================== -->
-    <title>நவனிஷ் (Navanish) | Developer Portfolio</title>
-    <meta name="description" content="Portfolio of Navanish - 3rd Year IT Student, Full Stack Developer & IoT Enthusiast">
-    <meta name="keywords" content="Navanish, Developer, Portfolio, IT Student, React, Node.js, Python, IoT, Web Development">
-    <meta name="author" content="Navanish">
+
+    <title>Navaneesh | Developer Portfolio</title>
+    <meta name="description"
+        content="Portfolio of Navaneesh - 3rd Year IT Student, Full Stack Web Developer & Hardware/IoT Enthusiast">
+    <meta name="keywords"
+        content="Navaneesh, Developer, Portfolio, IT Student, ESP32, Node.js, Express, MongoDB, Arduino, Java">
+    <meta name="author" content="Navaneesh">
 
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    
+
     <!-- Google Fonts: Inter & Fira Code -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
-    
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap"
+        rel="stylesheet">
+
     <!-- Phosphor Icons (GitHub-style clean icons) -->
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
 
@@ -58,6 +60,7 @@
         * {
             box-sizing: border-box;
         }
+
         body {
             background-color: #0d1117;
             color: #c9d1d9;
@@ -66,10 +69,23 @@
         }
 
         /* Custom GitHub-style scrollbar */
-        ::-webkit-scrollbar { width: 8px; height: 8px; }
-        ::-webkit-scrollbar-track { background: #0d1117; }
-        ::-webkit-scrollbar-thumb { background: #30363d; border-radius: 4px; }
-        ::-webkit-scrollbar-thumb:hover { background: #8b949e; }
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #0d1117;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #30363d;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #8b949e;
+        }
 
         /* ================================================================= */
         /* PROJECT CARDS: Intentional Center Hover Only (Edge Safe)           */
@@ -79,7 +95,6 @@
             position: relative;
         }
 
-        /* Card active hover state triggered strictly when hovering the inner body */
         .project-card.active-hover {
             transform: translateY(-4px);
             border-color: #58a6ff;
@@ -93,6 +108,7 @@
             overflow: hidden;
             transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease, margin-top 0.3s ease;
         }
+
         .project-card.active-hover .expandable-preview {
             max-height: 500px;
             opacity: 1;
@@ -101,17 +117,21 @@
 
         /* Highlight animation for project card */
         @keyframes highlightPulse {
-            0%, 100% {
+
+            0%,
+            100% {
                 border-color: #58a6ff;
                 box-shadow: 0 0 0 4px rgba(88, 166, 255, 0.4), 0 0 30px rgba(88, 166, 255, 0.6);
                 transform: scale(1.02);
             }
+
             50% {
                 border-color: #7ee787;
                 box-shadow: 0 0 0 6px rgba(126, 231, 135, 0.5), 0 0 40px rgba(126, 231, 135, 0.7);
                 transform: scale(1.03);
             }
         }
+
         .highlight-project {
             animation: highlightPulse 1.2s ease-in-out 3;
             border-color: #58a6ff !important;
@@ -136,11 +156,33 @@
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             z-index: 20;
         }
+
         .project-card:hover .docked-skill-ball,
         .docked-skill-ball.revealed {
             transform: translateY(0) scale(1);
             opacity: 1;
             pointer-events: auto;
+        }
+
+        /* Bottom Connection Dock Port for Thread */
+        .project-thread-dock {
+            position: absolute;
+            bottom: -6px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 12px;
+            height: 12px;
+            background: #58a6ff;
+            border: 2px solid #0d1117;
+            border-radius: 50%;
+            box-shadow: 0 0 10px #58a6ff;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 10;
+        }
+
+        .project-thread-dock.active {
+            opacity: 1;
         }
 
         /* Tag badge styling */
@@ -150,6 +192,7 @@
             border: 1px solid rgba(56, 139, 253, 0.2);
             transition: all 0.2s ease;
         }
+
         .tech-badge:hover {
             background-color: rgba(56, 139, 253, 0.2);
             border-color: #58a6ff;
@@ -163,6 +206,7 @@
             overflow: hidden;
             border-radius: 0.5rem;
         }
+
         .video-container iframe,
         .video-container video {
             position: absolute;
@@ -186,19 +230,55 @@
         }
 
         @keyframes floatLeftBubble {
-            0% { transform: translate3d(-3vw, 105vh, 0) scale(0.85); opacity: 0; }
-            10% { opacity: 0.95; transform: translate3d(4vw, 85vh, 0) scale(1); }
-            50% { transform: translate3d(9vw, 50vh, 0) scale(1.02); }
-            90% { opacity: 0.95; transform: translate3d(3vw, 15vh, 0) scale(1); }
-            100% { transform: translate3d(6vw, -10vh, 0) scale(0.85); opacity: 0; }
+            0% {
+                transform: translate3d(-3vw, 105vh, 0) scale(0.85);
+                opacity: 0;
+            }
+
+            10% {
+                opacity: 0.95;
+                transform: translate3d(4vw, 85vh, 0) scale(1);
+            }
+
+            50% {
+                transform: translate3d(9vw, 50vh, 0) scale(1.02);
+            }
+
+            90% {
+                opacity: 0.95;
+                transform: translate3d(3vw, 15vh, 0) scale(1);
+            }
+
+            100% {
+                transform: translate3d(6vw, -10vh, 0) scale(0.85);
+                opacity: 0;
+            }
         }
 
         @keyframes floatRightBubble {
-            0% { transform: translate3d(103vw, 105vh, 0) scale(0.85); opacity: 0; }
-            10% { opacity: 0.95; transform: translate3d(88vw, 85vh, 0) scale(1); }
-            50% { transform: translate3d(83vw, 50vh, 0) scale(1.02); }
-            90% { opacity: 0.95; transform: translate3d(89vw, 15vh, 0) scale(1); }
-            100% { transform: translate3d(85vw, -10vh, 0) scale(0.85); opacity: 0; }
+            0% {
+                transform: translate3d(103vw, 105vh, 0) scale(0.85);
+                opacity: 0;
+            }
+
+            10% {
+                opacity: 0.95;
+                transform: translate3d(88vw, 85vh, 0) scale(1);
+            }
+
+            50% {
+                transform: translate3d(83vw, 50vh, 0) scale(1.02);
+            }
+
+            90% {
+                opacity: 0.95;
+                transform: translate3d(89vw, 15vh, 0) scale(1);
+            }
+
+            100% {
+                transform: translate3d(85vw, -10vh, 0) scale(0.85);
+                opacity: 0;
+            }
         }
 
         .skill-bubble {
@@ -214,9 +294,9 @@
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
             white-space: nowrap;
             transition: max-width 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275),
-                        border-color 0.3s ease,
-                        box-shadow 0.3s ease,
-                        transform 0.3s ease;
+                border-color 0.3s ease,
+                box-shadow 0.3s ease,
+                transform 0.3s ease;
             position: relative;
             user-select: none;
             will-change: transform, max-width;
@@ -224,12 +304,29 @@
 
         /* Jealous Frantic Jitter / Shaky Animation */
         @keyframes jealousJitter {
-            0% { transform: translate3d(0, 0, 0) rotate(0deg); }
-            20% { transform: translate3d(-3px, 2px, 0) rotate(-3deg); }
-            40% { transform: translate3d(3px, -2px, 0) rotate(3deg); }
-            60% { transform: translate3d(-2px, -3px, 0) rotate(-2deg); }
-            80% { transform: translate3d(2px, 2px, 0) rotate(2deg); }
-            100% { transform: translate3d(0, 0, 0) rotate(0deg); }
+            0% {
+                transform: translate3d(0, 0, 0) rotate(0deg);
+            }
+
+            20% {
+                transform: translate3d(-3px, 2px, 0) rotate(-3deg);
+            }
+
+            40% {
+                transform: translate3d(3px, -2px, 0) rotate(3deg);
+            }
+
+            60% {
+                transform: translate3d(-2px, -3px, 0) rotate(-2deg);
+            }
+
+            80% {
+                transform: translate3d(2px, 2px, 0) rotate(2deg);
+            }
+
+            100% {
+                transform: translate3d(0, 0, 0) rotate(0deg);
+            }
         }
 
         .bubble-shaky {
@@ -239,19 +336,39 @@
         }
 
         @keyframes bubbleBurst {
-            0% { transform: scale(1); opacity: 1; }
-            50% { transform: scale(1.4) rotate(45deg); opacity: 0.8; }
-            100% { transform: scale(0) rotate(180deg); opacity: 0; }
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+
+            50% {
+                transform: scale(1.4) rotate(45deg);
+                opacity: 0.8;
+            }
+
+            100% {
+                transform: scale(0) rotate(180deg);
+                opacity: 0;
+            }
         }
+
         .bubble-bursting {
             animation: bubbleBurst 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards !important;
         }
 
         /* Hand Gesture Floating Hint */
         @keyframes handGesture {
-            0%, 100% { transform: translateX(0); }
-            50% { transform: translateX(6px); }
+
+            0%,
+            100% {
+                transform: translateX(0);
+            }
+
+            50% {
+                transform: translateX(6px);
+            }
         }
+
         .gesture-hint {
             animation: handGesture 1.4s ease-in-out infinite;
         }
@@ -266,7 +383,7 @@
             transform: scale(0);
         }
 
-        /* Dynamic SVG Thread Connection Layer - Positioned Behind Main Sections (z-index: 5) */
+        /* Dynamic SVG Thread Connection Layer - Behind Sections at z-index: 5 */
         #thread-svg {
             position: fixed;
             top: 0;
@@ -274,15 +391,22 @@
             width: 100vw;
             height: 100vh;
             pointer-events: none;
-            z-index: 5; /* Flows behind sections and featured works */
+            z-index: 5;
         }
+
         .thread-path {
             stroke-dasharray: 10, 6;
             animation: dashFlow 1.2s linear infinite;
         }
+
         @keyframes dashFlow {
-            from { stroke-dashoffset: 32; }
-            to { stroke-dashoffset: 0; }
+            from {
+                stroke-dashoffset: 32;
+            }
+
+            to {
+                stroke-dashoffset: 0;
+            }
         }
 
         /* ================================================================= */
@@ -298,6 +422,7 @@
             margin-bottom: 0.5rem;
             overflow: visible;
         }
+
         .orbit-track {
             position: absolute;
             width: 90%;
@@ -310,10 +435,17 @@
             justify-content: space-between;
             padding: 0 10px;
         }
+
         @keyframes rotateOrbit {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
         }
+
         .orbit-ball {
             background: #161b22;
             border: 1.5px solid #58a6ff;
@@ -326,12 +458,18 @@
             animation: counterRotate 12s linear infinite;
             white-space: nowrap;
         }
+
         @keyframes counterRotate {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(-360deg); }
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(-360deg);
+            }
         }
 
-        /* Skill Card Already Triggered State */
+        /* Skill Card Triggered Status */
         .skill-card-triggered {
             border-color: rgba(88, 166, 255, 0.3) !important;
             opacity: 0.85;
@@ -347,20 +485,22 @@
     <svg id="thread-svg">
         <defs>
             <linearGradient id="threadGradient" x1="0%" y1="100%" x2="0%" y2="0%">
-                <stop offset="0%" stop-color="#58a6ff" stop-opacity="0.8" />
-                <stop offset="50%" stop-color="#a371f7" stop-opacity="0.6" />
+                <stop offset="0%" stop-color="#58a6ff" stop-opacity="0.9" />
+                <stop offset="50%" stop-color="#a371f7" stop-opacity="0.7" />
                 <stop offset="100%" stop-color="#7ee787" stop-opacity="0.9" />
             </linearGradient>
             <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
-                <feGaussianBlur stdDeviation="3" result="glow"/>
-                <feComposite in="SourceGraphic" in2="glow" operator="over"/>
+                <feGaussianBlur stdDeviation="3.5" result="glow" />
+                <feComposite in="SourceGraphic" in2="glow" operator="over" />
             </filter>
         </defs>
-        <path id="connection-line" d="" fill="none" stroke="url(#threadGradient)" stroke-width="3.5" filter="url(#glow)" class="thread-path" opacity="0"></path>
+        <path id="connection-line" d="" fill="none" stroke="url(#threadGradient)" stroke-width="3.5" filter="url(#glow)"
+            class="thread-path" opacity="0"></path>
     </svg>
 
     <!-- Flying Skill Orb Element -->
-    <div id="flying-orb" class="bg-[#161b22] border-2 border-github-link rounded-full px-4 py-2 shadow-2xl flex items-center gap-2">
+    <div id="flying-orb"
+        class="bg-[#161b22] border-2 border-github-link rounded-full px-4 py-2 shadow-2xl flex items-center gap-2">
         <i id="flying-orb-icon" class="ph ph-atom text-github-link text-lg"></i>
         <span id="flying-orb-text" class="text-white font-bold text-sm">React</span>
     </div>
@@ -373,15 +513,17 @@
     <!-- =================================================================== -->
     <header class="border-b border-github-border bg-github-bg/90 backdrop-blur-md sticky top-0 z-40">
         <div class="max-w-6xl mx-auto px-4 sm:px-6 py-3.5 flex justify-between items-center">
-            
+
             <!-- Left: Brand / Avatar -->
             <a href="#about" class="flex items-center gap-3 group">
-                <div class="w-9 h-9 rounded-full bg-gradient-to-tr from-github-link to-purple-500 flex items-center justify-center text-white font-bold text-base shadow-sm group-hover:scale-105 transition-transform">
+                <div
+                    class="w-9 h-9 rounded-full bg-gradient-to-tr from-github-link to-purple-500 flex items-center justify-center text-white font-bold text-base shadow-sm group-hover:scale-105 transition-transform">
                     ந
                 </div>
                 <div>
-                    <span class="font-semibold text-white text-sm leading-tight block group-hover:text-github-link transition-colors">
-                        நவனிஷ் (Navanish)
+                    <span
+                        class="font-semibold text-white text-sm leading-tight block group-hover:text-github-link transition-colors">
+                        Navaneesh (நவனிஷ்)
                     </span>
                     <span class="text-xs text-github-muted block">
                         3rd Year IT Student & Developer
@@ -391,11 +533,16 @@
 
             <!-- Right: Navigation Links -->
             <nav class="flex items-center gap-2 sm:gap-6 text-sm font-medium">
-                <a href="#about" class="text-github-text hover:text-github-link transition-colors px-2 py-1 rounded">About</a>
-                <a href="#projects" class="text-github-text hover:text-github-link transition-colors px-2 py-1 rounded">Projects</a>
-                <a href="#showcase" class="text-github-text hover:text-github-link transition-colors px-2 py-1 rounded">Showcase</a>
-                <a href="#skills" class="text-github-text hover:text-github-link transition-colors px-2 py-1 rounded">Skills</a>
-                <a href="#contact" class="hidden sm:inline-flex items-center gap-1.5 bg-github-green hover:bg-github-greenHover text-white text-xs px-3 py-1.5 rounded-md font-semibold transition-colors shadow-sm">
+                <a href="#about"
+                    class="text-github-text hover:text-github-link transition-colors px-2 py-1 rounded">About</a>
+                <a href="#projects"
+                    class="text-github-text hover:text-github-link transition-colors px-2 py-1 rounded">Projects</a>
+                <a href="#showcase"
+                    class="text-github-text hover:text-github-link transition-colors px-2 py-1 rounded">Showcase</a>
+                <a href="#skills"
+                    class="text-github-text hover:text-github-link transition-colors px-2 py-1 rounded">Skills</a>
+                <a href="#contact"
+                    class="hidden sm:inline-flex items-center gap-1.5 bg-github-green hover:bg-github-greenHover text-white text-xs px-3 py-1.5 rounded-md font-semibold transition-colors shadow-sm">
                     <i class="ph ph-paper-plane-tilt"></i> Contact
                 </a>
             </nav>
@@ -411,17 +558,18 @@
         <!-- SECTION 1: HERO / ABOUT PROFILE                                 -->
         <!-- =============================================================== -->
         <section id="about" class="mb-14 scroll-mt-20">
-            <div class="bg-github-card border border-github-border rounded-xl p-6 sm:p-8 shadow-xl relative overflow-hidden">
+            <div
+                class="bg-github-card border border-github-border rounded-xl p-6 sm:p-8 shadow-xl relative overflow-hidden">
                 <div class="flex flex-col md:flex-row gap-6 md:gap-8 items-start relative z-10">
-                    
-                    <!-- Profile Photo -->
+
+                    <!-- Profile Photo with Graceful Fallback -->
                     <div class="flex-shrink-0 relative group">
-                        <img 
-                            src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&h=400&q=80" 
-                            alt="Navanish Profile Photo" 
-                            class="w-28 h-28 sm:w-36 sm:h-36 rounded-2xl object-cover border-2 border-github-border group-hover:border-github-link shadow-lg transition-all"
-                        >
-                        <div class="absolute -bottom-2 -right-2 bg-github-bg border border-github-border text-xs px-2.5 py-1 rounded-full text-github-accent flex items-center gap-1.5 shadow">
+                        <img src="img/profile.png"
+                            onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&h=400&q=80';"
+                            alt="Navaneesh Profile Photo"
+                            class="w-28 h-28 sm:w-36 sm:h-36 rounded-2xl object-cover border-2 border-github-border group-hover:border-github-link shadow-lg transition-all">
+                        <div
+                            class="absolute -bottom-2 -right-2 bg-github-bg border border-github-border text-xs px-2.5 py-1 rounded-full text-github-accent flex items-center gap-1.5 shadow">
                             <span class="w-2 h-2 rounded-full bg-github-accent animate-pulse"></span> Open to Work
                         </div>
                     </div>
@@ -430,40 +578,50 @@
                     <div class="flex-grow">
                         <div class="flex flex-wrap items-center gap-3 mb-2">
                             <h1 class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
-                                Navanish <span class="text-github-muted font-normal text-xl">(நவனிஷ்)</span>
+                                Navaneesh <span class="text-github-muted font-normal text-xl">(நவனிஷ்)</span>
                             </h1>
-                            <span class="text-xs bg-github-border/70 text-github-text px-2.5 py-0.5 rounded-full border border-github-border">
-                                B.Tech / BE IT • 3rd Year
+                            <span
+                                class="text-xs bg-github-border/70 text-github-text px-2.5 py-0.5 rounded-full border border-github-border">
+                                3rd Year IT Student
+                            </span>
+                            <span class="text-xs text-github-muted flex items-center gap-1">
+                                <i class="ph ph-map-pin text-github-link"></i> Chennai / Madurai, India
                             </span>
                         </div>
 
                         <p class="text-github-link font-medium text-sm sm:text-base mb-3">
-                            Full-Stack Developer • IoT & Embedded Hardware Enthusiast • Problem Solver
+                            3rd Year IT Student — Enthusiastic & Curious Developer
                         </p>
 
                         <p class="text-github-text leading-relaxed text-sm sm:text-base mb-6 max-w-3xl">
-                            I am a passionate 3rd-year Information Technology student driven by turning ideas into high-performing, real-world software. I specialize in building responsive web applications, secure RESTful backends, and experimenting with microcontrollers like the ESP32.
+                            I am an IT undergraduate interested in building interactive web platforms and experimenting
+                            with hardware integrations. I enjoy working with microcontrollers and practicing competitive
+                            programming.
                         </p>
 
-                        <!-- Action Buttons -->
+                        <!-- Action Buttons & Social Links -->
                         <div class="flex flex-wrap items-center gap-3">
-                            <a href="https://github.com" target="_blank" rel="noopener noreferrer" 
-                               class="inline-flex items-center gap-2 bg-github-border/60 hover:bg-github-border text-white text-sm px-4 py-2 rounded-md transition-colors border border-github-border font-medium">
-                                <i class="ph ph-github-logo text-lg text-white"></i> GitHub Profile
+                            <!-- GitHub Profile -->
+                            <a href="https://github.com/Navaneesh-A/" target="_blank" rel="noopener noreferrer"
+                                class="inline-flex items-center gap-2 bg-github-border/60 hover:bg-github-border text-white text-sm px-4 py-2 rounded-md transition-colors border border-github-border font-medium">
+                                <i class="ph ph-github-logo text-lg text-white"></i> GitHub
                             </a>
 
-                            <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" 
-                               class="inline-flex items-center gap-2 bg-github-border/60 hover:bg-github-border text-white text-sm px-4 py-2 rounded-md transition-colors border border-github-border font-medium">
+                            <!-- LinkedIn Profile -->
+                            <a href="https://linkedin.com/in/navaneesh-a" target="_blank" rel="noopener noreferrer"
+                                class="inline-flex items-center gap-2 bg-github-border/60 hover:bg-github-border text-white text-sm px-4 py-2 rounded-md transition-colors border border-github-border font-medium">
                                 <i class="ph ph-linkedin-logo text-lg text-[#0a66c2]"></i> LinkedIn
                             </a>
 
-                            <a href="#" onclick="alert('Attach your resume PDF in the href attribute!'); return false;" 
-                               class="inline-flex items-center gap-2 bg-github-border/60 hover:bg-github-border text-white text-sm px-4 py-2 rounded-md transition-colors border border-github-border font-medium">
-                                <i class="ph ph-file-text text-lg text-yellow-400"></i> Resume / CV
+                            <!-- LeetCode Profile -->
+                            <a href="https://leetcode.com/navaneesh2006" target="_blank" rel="noopener noreferrer"
+                                class="inline-flex items-center gap-2 bg-github-border/60 hover:bg-github-border text-white text-sm px-4 py-2 rounded-md transition-colors border border-github-border font-medium">
+                                <i class="ph ph-code text-lg text-yellow-400"></i> LeetCode
                             </a>
 
-                            <a href="#contact" 
-                               class="inline-flex items-center gap-2 bg-github-link hover:bg-blue-600 text-white text-sm px-4 py-2 rounded-md transition-colors font-medium shadow-sm">
+                            <!-- Contact Me -->
+                            <a href="#contact"
+                                class="inline-flex items-center gap-2 bg-github-link hover:bg-blue-600 text-white text-sm px-4 py-2 rounded-md transition-colors font-medium shadow-sm">
                                 <i class="ph ph-envelope-simple text-lg"></i> Contact Me
                             </a>
                         </div>
@@ -475,7 +633,7 @@
 
 
         <!-- =============================================================== -->
-        <!-- SECTION 2: PINNED PROJECTS (CENTER-FOCUSED HOVER INTERACTION)  -->
+        <!-- SECTION 2: PINNED PROJECTS                                      -->
         <!-- =============================================================== -->
         <section id="projects" class="mb-14 scroll-mt-20">
             <div class="flex items-center justify-between mb-6">
@@ -484,67 +642,76 @@
                         <i class="ph ph-push-pin text-github-link"></i> Pinned Projects
                     </h2>
                     <p class="text-xs sm:text-sm text-github-muted mt-0.5">
-                        Hover card centers for interactive previews, or click for full project modal & revolving skills.
+                        Hover card centers for interactive previews, or click for details & revolving skills.
                     </p>
                 </div>
-                <span class="text-xs bg-github-card border border-github-border text-github-muted px-2.5 py-1 rounded-full font-mono">
-                    3 Repositories
+                <span
+                    class="text-xs bg-github-card border border-github-border text-github-muted px-2.5 py-1 rounded-full font-mono">
+                    4 Repositories
                 </span>
             </div>
 
-            <!-- Projects Grid -->
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Projects Grid (2x2 Grid) -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
 
                 <!-- ======================================================= -->
-                <!-- [PROJECT 1]: CAMPUS AI (React / Python / Flask)         -->
+                <!-- [PROJECT 1]: LINKEDIN POST SAVER                        -->
                 <!-- ======================================================= -->
-                <div id="project-campusai" data-skills="React,Python,Flask" class="project-card bg-github-card border border-github-border rounded-xl flex flex-col justify-between cursor-pointer overflow-visible"
-                     onclick="openProjectModal('CampusAI', 'An AI-driven campus assistant built to streamline student workflows, timetable scheduling, and smart queries.', 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=800&q=80', 'https://github.com', 'https://example.com', ['React', 'Python', 'Flask', 'OpenAI API'])">
-                    
-                    <!-- Docked Skill Ball (Unhides when hovering from skills or direct hover) -->
+                <div id="project-linkedin" data-skills="Express,Node.js,HTML/CSS"
+                    class="project-card bg-github-card border border-github-border rounded-xl flex flex-col justify-between cursor-pointer overflow-visible"
+                    onclick="openProjectModal('LinkedIn Post Saver', 'A hosted, multi-user web tool for scraping, rendering, and managing saved LinkedIn posts with custom toggles.', 'img/linkedin_saver.png', 'https://github.com/Navaneesh-A/linkedin_saved_post_together', 'https://linkedin-saved-post-together.onrender.com/', ['Express', 'Web Scraping', 'Local Storage', 'Node.js'])">
+
                     <div class="docked-skill-ball">
-                        <i class="ph ph-atom text-blue-400"></i>
-                        <span class="text-xs text-white font-medium skill-ball-title">React Linked</span>
+                        <i class="ph ph-hexagon text-green-400"></i>
+                        <span class="text-xs text-white font-medium skill-ball-title">Express Linked</span>
                     </div>
 
-                    <!-- Inner Centered Hover Trigger Zone (Edges safe from accidental triggers) -->
+                    <div class="project-thread-dock"></div>
+
                     <div class="card-inner-zone p-5">
                         <div class="flex justify-between items-start mb-2">
                             <div class="flex items-center gap-2">
                                 <i class="ph ph-book-bookmark text-github-muted text-lg"></i>
-                                <a href="https://github.com" target="_blank" onclick="event.stopPropagation()" class="font-bold text-github-link hover:underline text-lg">
-                                    CampusAI
+                                <a href="https://github.com/Navaneesh-A/linkedin_saved_post_together" target="_blank"
+                                    onclick="event.stopPropagation()"
+                                    class="font-bold text-github-link hover:underline text-lg">
+                                    linkedin_saved_post_together
                                 </a>
                             </div>
-                            <span class="text-[11px] border border-github-border rounded-full px-2 py-0.5 text-github-muted">Public</span>
+                            <span
+                                class="text-[11px] bg-green-500/10 text-green-400 border border-green-500/30 rounded-full px-2 py-0.5 font-mono">Live
+                                on Render</span>
                         </div>
 
                         <p class="text-github-muted text-xs sm:text-sm mb-4 leading-relaxed line-clamp-2">
-                            An AI-driven campus assistant built to streamline student workflows, timetable scheduling, and university resource discovery.
+                            A hosted, multi-user web tool for scraping, rendering, and managing saved LinkedIn posts
+                            with custom toggles.
                         </p>
 
                         <div class="flex flex-wrap gap-1.5 mb-3">
-                            <span class="tech-badge text-[11px] px-2 py-0.5 rounded font-mono">React</span>
-                            <span class="tech-badge text-[11px] px-2 py-0.5 rounded font-mono">Flask</span>
-                            <span class="tech-badge text-[11px] px-2 py-0.5 rounded font-mono">Python</span>
+                            <span class="tech-badge text-[11px] px-2 py-0.5 rounded font-mono">Express</span>
+                            <span class="tech-badge text-[11px] px-2 py-0.5 rounded font-mono">Web Scraping</span>
+                            <span class="tech-badge text-[11px] px-2 py-0.5 rounded font-mono">Local Storage</span>
                         </div>
 
-                        <div class="flex items-center gap-4 text-xs text-github-muted pt-2 border-t border-github-border/50">
-                            <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-blue-400"></span> Python / JS</span>
-                            <span class="flex items-center gap-1"><i class="ph ph-star"></i> 18</span>
-                            <span class="flex items-center gap-1"><i class="ph ph-git-fork"></i> 4</span>
+                        <div
+                            class="flex items-center gap-4 text-xs text-github-muted pt-2 border-t border-github-border/50">
+                            <span class="flex items-center gap-1.5"><span
+                                    class="w-2.5 h-2.5 rounded-full bg-yellow-400"></span> JavaScript</span>
+                            <span class="flex items-center gap-1"><i
+                                    class="ph ph-arrow-square-out text-github-link"></i> Live Demo</span>
                         </div>
 
                         <div class="expandable-preview border-t border-github-border pt-3">
                             <p class="text-xs text-white font-medium mb-1.5 flex items-center gap-1">
                                 <i class="ph ph-eye text-github-link"></i> Interface Preview:
                             </p>
-                            <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=600&q=80" 
-                                 alt="CampusAI Preview Screenshot" 
-                                 class="w-full h-28 rounded object-cover border border-github-border mb-2"
-                            >
+                            <img src="img/linkedin_saver.png"
+                                onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1616469829941-c7200edec809?auto=format&fit=crop&w=600&q=80';"
+                                alt="LinkedIn Post Saver Preview"
+                                class="w-full h-32 rounded object-cover border border-github-border mb-2">
                             <p class="text-[11px] text-github-muted">
-                                Integrates university APIs with fine-tuned LLM queries and live timetable alerts.
+                                Multi-user dashboard to organize saved LinkedIn content with search and categories.
                             </p>
                         </div>
                     </div>
@@ -552,107 +719,190 @@
 
 
                 <!-- ======================================================= -->
-                <!-- [PROJECT 2]: NALAM 360 HEALTHCARE (Node.js / MongoDB)  -->
+                <!-- [PROJECT 2]: ESP32 NOTES TAKER                          -->
                 <!-- ======================================================= -->
-                <div id="project-nalam360" data-skills="Node.js,MongoDB,Tailwind" class="project-card bg-github-card border border-github-border rounded-xl flex flex-col justify-between cursor-pointer overflow-visible"
-                     onclick="openProjectModal('Nalam360', 'A holistic healthcare platform linking rural health clinics to urban specialists with offline-first synchronization.', 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=800&q=80', 'https://github.com', 'https://example.com', ['Node.js', 'Express', 'MongoDB', 'TailwindCSS'])">
-                    
+                <div id="project-notes" data-skills="ESP32,Arduino,Firebase"
+                    class="project-card bg-github-card border border-github-border rounded-xl flex flex-col justify-between cursor-pointer overflow-visible"
+                    onclick="openProjectModal('ESP32 Notes Taker', 'A wearable ESP32 prototype that pairs with external Bluetooth keyboards to write and sync notes to cloud Firebase.', 'img/esp32_notes_taker.png', 'https://github.com/Navaneesh-A/note_tracker_class', '', ['ESP32', 'Bluetooth', 'Cloud Firebase', 'C++'])">
+
                     <div class="docked-skill-ball">
-                        <i class="ph ph-hexagon text-green-400"></i>
-                        <span class="text-xs text-white font-medium skill-ball-title">Node.js Linked</span>
+                        <i class="ph ph-cpu text-red-400"></i>
+                        <span class="text-xs text-white font-medium skill-ball-title">ESP32 Linked</span>
                     </div>
+
+                    <div class="project-thread-dock"></div>
 
                     <div class="card-inner-zone p-5">
                         <div class="flex justify-between items-start mb-2">
                             <div class="flex items-center gap-2">
                                 <i class="ph ph-book-bookmark text-github-muted text-lg"></i>
-                                <a href="https://github.com" target="_blank" onclick="event.stopPropagation()" class="font-bold text-github-link hover:underline text-lg">
-                                    Nalam360
+                                <a href="https://github.com/Navaneesh-A/note_tracker_class" target="_blank"
+                                    onclick="event.stopPropagation()"
+                                    class="font-bold text-github-link hover:underline text-lg">
+                                    note_tracker_class
                                 </a>
                             </div>
-                            <span class="text-[11px] border border-github-border rounded-full px-2 py-0.5 text-github-muted">Public</span>
+                            <span
+                                class="text-[11px] border border-github-border rounded-full px-2 py-0.5 text-github-muted">Hardware
+                                IoT</span>
                         </div>
 
                         <p class="text-github-muted text-xs sm:text-sm mb-4 leading-relaxed line-clamp-2">
-                            A holistic healthcare platform linking rural clinics to urban medical specialists with encrypted offline-first synchronization.
+                            A wearable ESP32 prototype that pairs with external Bluetooth keyboards to write, digitize,
+                            and sync notes to the cloud.
+                        </p>
+
+                        <div class="flex flex-wrap gap-1.5 mb-3">
+                            <span class="tech-badge text-[11px] px-2 py-0.5 rounded font-mono">ESP32</span>
+                            <span class="tech-badge text-[11px] px-2 py-0.5 rounded font-mono">Bluetooth</span>
+                            <span class="tech-badge text-[11px] px-2 py-0.5 rounded font-mono">Firebase</span>
+                        </div>
+
+                        <div
+                            class="flex items-center gap-4 text-xs text-github-muted pt-2 border-t border-github-border/50">
+                            <span class="flex items-center gap-1.5"><span
+                                    class="w-2.5 h-2.5 rounded-full bg-blue-500"></span> C++ / Arduino</span>
+                            <span class="flex items-center gap-1"><i class="ph ph-broadcast text-red-400"></i> BLE
+                                Sync</span>
+                        </div>
+
+                        <div class="expandable-preview border-t border-github-border pt-3">
+                            <p class="text-xs text-white font-medium mb-1.5 flex items-center gap-1">
+                                <i class="ph ph-eye text-github-link"></i> Prototype Preview:
+                            </p>
+                            <img src="img/esp32_notes_taker.png"
+                                onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=600&q=80';"
+                                alt="ESP32 Notes Taker Preview"
+                                class="w-full h-32 rounded object-cover border border-github-border mb-2">
+                            <p class="text-[11px] text-github-muted">
+                                Portable note taking with Bluetooth HID keyboard pairing & real-time cloud backup.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- ======================================================= -->
+                <!-- [PROJECT 3]: YOUTUBE TRIM DOWNLOADER                    -->
+                <!-- ======================================================= -->
+                <div id="project-yt" data-skills="Node.js,Express,SSE"
+                    class="project-card bg-github-card border border-github-border rounded-xl flex flex-col justify-between cursor-pointer overflow-visible"
+                    onclick="openProjectModal('YouTube Trim Downloader', 'A web application to fetch video metadata, specify timestamps, and download trimmed segments of videos.', 'img/yt_trimmer.png', 'https://github.com/Navaneesh-A/', '', ['Node.js', 'Express', 'SSE', 'FFmpeg'])">
+
+                    <div class="docked-skill-ball">
+                        <i class="ph ph-video-camera text-red-500"></i>
+                        <span class="text-xs text-white font-medium skill-ball-title">Node.js Linked</span>
+                    </div>
+
+                    <div class="project-thread-dock"></div>
+
+                    <div class="card-inner-zone p-5">
+                        <div class="flex justify-between items-start mb-2">
+                            <div class="flex items-center gap-2">
+                                <i class="ph ph-book-bookmark text-github-muted text-lg"></i>
+                                <a href="https://github.com/Navaneesh-A/" target="_blank"
+                                    onclick="event.stopPropagation()"
+                                    class="font-bold text-github-link hover:underline text-lg">
+                                    yt-trimmer
+                                </a>
+                            </div>
+                            <span
+                                class="text-[11px] border border-github-border rounded-full px-2 py-0.5 text-github-muted">Web
+                                Tool</span>
+                        </div>
+
+                        <p class="text-github-muted text-xs sm:text-sm mb-4 leading-relaxed line-clamp-2">
+                            A web application to fetch video metadata, specify timestamps, and download trimmed segments
+                            of videos with live SSE progress.
+                        </p>
+
+                        <div class="flex flex-wrap gap-1.5 mb-3">
+                            <span class="tech-badge text-[11px] px-2 py-0.5 rounded font-mono">Node.js</span>
+                            <span class="tech-badge text-[11px] px-2 py-0.5 rounded font-mono">Express</span>
+                            <span class="tech-badge text-[11px] px-2 py-0.5 rounded font-mono">SSE Stream</span>
+                        </div>
+
+                        <div
+                            class="flex items-center gap-4 text-xs text-github-muted pt-2 border-t border-github-border/50">
+                            <span class="flex items-center gap-1.5"><span
+                                    class="w-2.5 h-2.5 rounded-full bg-green-500"></span> Node.js</span>
+                            <span class="flex items-center gap-1"><i class="ph ph-scissors text-purple-400"></i> Media
+                                Stream</span>
+                        </div>
+
+                        <div class="expandable-preview border-t border-github-border pt-3">
+                            <p class="text-xs text-white font-medium mb-1.5 flex items-center gap-1">
+                                <i class="ph ph-eye text-github-link"></i> Interface Preview:
+                            </p>
+                            <img src="img/yt_trimmer.png"
+                                onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?auto=format&fit=crop&w=600&q=80';"
+                                alt="YouTube Trim Downloader Preview"
+                                class="w-full h-32 rounded object-cover border border-github-border mb-2">
+                            <p class="text-[11px] text-github-muted">
+                                Real-time server-sent events stream download progress directly to the client.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- ======================================================= -->
+                <!-- [PROJECT 4]: LEETCODE STUDY TRACKER                     -->
+                <!-- ======================================================= -->
+                <div id="project-leetcode" data-skills="Java,MongoDB,GraphQL"
+                    class="project-card bg-github-card border border-github-border rounded-xl flex flex-col justify-between cursor-pointer overflow-visible"
+                    onclick="openProjectModal('LeetCode Study Tracker', 'A full-stack application that fetches and tracks user statistics, streaks, and recent algorithmic submissions.', 'img/leetcode_track.png', 'https://github.com/Navaneesh-A/leetcode_tracker', '', ['Node.js', 'Express', 'MongoDB', 'GraphQL'])">
+
+                    <div class="docked-skill-ball">
+                        <i class="ph ph-coffee text-orange-400"></i>
+                        <span class="text-xs text-white font-medium skill-ball-title">Java / GraphQL Linked</span>
+                    </div>
+
+                    <div class="project-thread-dock"></div>
+
+                    <div class="card-inner-zone p-5">
+                        <div class="flex justify-between items-start mb-2">
+                            <div class="flex items-center gap-2">
+                                <i class="ph ph-book-bookmark text-github-muted text-lg"></i>
+                                <a href="https://github.com/Navaneesh-A/leetcode_tracker" target="_blank"
+                                    onclick="event.stopPropagation()"
+                                    class="font-bold text-github-link hover:underline text-lg">
+                                    leetcode_tracker
+                                </a>
+                            </div>
+                            <span
+                                class="text-[11px] border border-github-border rounded-full px-2 py-0.5 text-github-muted">Full-Stack</span>
+                        </div>
+
+                        <p class="text-github-muted text-xs sm:text-sm mb-4 leading-relaxed line-clamp-2">
+                            A full-stack application that fetches and tracks user statistics and recent algorithmic
+                            submissions via GraphQL.
                         </p>
 
                         <div class="flex flex-wrap gap-1.5 mb-3">
                             <span class="tech-badge text-[11px] px-2 py-0.5 rounded font-mono">Node.js</span>
                             <span class="tech-badge text-[11px] px-2 py-0.5 rounded font-mono">MongoDB</span>
-                            <span class="tech-badge text-[11px] px-2 py-0.5 rounded font-mono">Tailwind</span>
+                            <span class="tech-badge text-[11px] px-2 py-0.5 rounded font-mono">GraphQL</span>
                         </div>
 
-                        <div class="flex items-center gap-4 text-xs text-github-muted pt-2 border-t border-github-border/50">
-                            <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-green-500"></span> JavaScript</span>
-                            <span class="flex items-center gap-1"><i class="ph ph-star"></i> 26</span>
-                            <span class="flex items-center gap-1"><i class="ph ph-git-fork"></i> 7</span>
-                        </div>
-
-                        <div class="expandable-preview border-t border-github-border pt-3">
-                            <p class="text-xs text-white font-medium mb-1.5 flex items-center gap-1">
-                                <i class="ph ph-eye text-github-link"></i> Interface Preview:
-                            </p>
-                            <img src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=600&q=80" 
-                                 alt="Nalam360 Preview Screenshot" 
-                                 class="w-full h-28 rounded object-cover border border-github-border mb-2"
-                            >
-                            <p class="text-[11px] text-github-muted">
-                                Built with local caching for remote areas, syncing records when connection restores.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-
-
-                <!-- ======================================================= -->
-                <!-- [PROJECT 3]: LEETCODE TRACKER (Java / C++)              -->
-                <!-- ======================================================= -->
-                <div id="project-leetcode" data-skills="Java,C++" class="project-card bg-github-card border border-github-border rounded-xl flex flex-col justify-between cursor-pointer overflow-visible"
-                     onclick="openProjectModal('LeetCode-Tracker', 'A dynamic statistical dashboard that pulls data from LeetCode APIs to track daily coding habits and performance metrics.', 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80', 'https://github.com', 'https://example.com', ['Java', 'Spring Boot', 'Chart.js', 'REST API'])">
-                    
-                    <div class="docked-skill-ball">
-                        <i class="ph ph-coffee text-orange-400"></i>
-                        <span class="text-xs text-white font-medium skill-ball-title">Java Linked</span>
-                    </div>
-
-                    <div class="card-inner-zone p-5">
-                        <div class="flex justify-between items-start mb-2">
-                            <div class="flex items-center gap-2">
-                                <i class="ph ph-book-bookmark text-github-muted text-lg"></i>
-                                <a href="https://github.com" target="_blank" onclick="event.stopPropagation()" class="font-bold text-github-link hover:underline text-lg">
-                                    leetcode-tracker
-                                </a>
-                            </div>
-                            <span class="text-[11px] border border-github-border rounded-full px-2 py-0.5 text-github-muted">Public</span>
-                        </div>
-
-                        <p class="text-github-muted text-xs sm:text-sm mb-4 leading-relaxed line-clamp-2">
-                            A dynamic statistical dashboard that pulls data from LeetCode to track daily coding habits, problem distribution, and streaks.
-                        </p>
-
-                        <div class="flex flex-wrap gap-1.5 mb-3">
-                            <span class="tech-badge text-[11px] px-2 py-0.5 rounded font-mono">Java</span>
-                            <span class="tech-badge text-[11px] px-2 py-0.5 rounded font-mono">C++</span>
-                            <span class="tech-badge text-[11px] px-2 py-0.5 rounded font-mono">Chart.js</span>
-                        </div>
-
-                        <div class="flex items-center gap-4 text-xs text-github-muted pt-2 border-t border-github-border/50">
-                            <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-orange-500"></span> Java</span>
-                            <span class="flex items-center gap-1"><i class="ph ph-star"></i> 12</span>
-                            <span class="flex items-center gap-1"><i class="ph ph-git-fork"></i> 3</span>
+                        <div
+                            class="flex items-center gap-4 text-xs text-github-muted pt-2 border-t border-github-border/50">
+                            <span class="flex items-center gap-1.5"><span
+                                    class="w-2.5 h-2.5 rounded-full bg-orange-500"></span> GraphQL / Mongo</span>
+                            <span class="flex items-center gap-1"><i class="ph ph-chart-line-up text-github-link"></i>
+                                Analytics</span>
                         </div>
 
                         <div class="expandable-preview border-t border-github-border pt-3">
                             <p class="text-xs text-white font-medium mb-1.5 flex items-center gap-1">
-                                <i class="ph ph-eye text-github-link"></i> Interface Preview:
+                                <i class="ph ph-eye text-github-link"></i> Dashboard Preview:
                             </p>
-                            <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=600&q=80" 
-                                 alt="LeetCode Tracker Preview Screenshot" 
-                                 class="w-full h-28 rounded object-cover border border-github-border mb-2"
-                            >
+                            <img src="img/leetcode_track.png"
+                                onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=600&q=80';"
+                                alt="LeetCode Tracker Preview"
+                                class="w-full h-32 rounded object-cover border border-github-border mb-2">
                             <p class="text-[11px] text-github-muted">
-                                Visualizes coding metrics, difficulty breakdown, and submission patterns in real-time.
+                                Visualizes coding metrics, difficulty breakdown, and daily problem streaks.
                             </p>
                         </div>
                     </div>
@@ -663,7 +913,7 @@
 
 
         <!-- =============================================================== -->
-        <!-- SECTION 3: FEATURED SHOWCASE SLIDESHOW & GESTURE HINT           -->
+        <!-- SECTION 3: FEATURED SHOWCASE SLIDESHOW                          -->
         <!-- =============================================================== -->
         <section id="showcase" class="mb-14 scroll-mt-20 relative z-10">
             <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
@@ -672,22 +922,27 @@
                         <i class="ph ph-film-slate text-purple-400"></i> Featured Works & Demonstrations
                     </h2>
                     <p class="text-xs sm:text-sm text-github-muted mt-0.5">
-                        Interactive showcase highlighting IoT hardware, browser extensions, and web utilities.
+                        Hardware prototypes, web utilities, and physical computing controllers.
                     </p>
                 </div>
-                
+
                 <!-- Controls & Interactive Gesture Hint -->
                 <div class="flex items-center gap-3 self-start sm:self-auto">
-                    <div class="inline-flex items-center gap-1.5 bg-github-card border border-github-border px-3 py-1 rounded-full text-xs text-github-link shadow-sm">
+                    <div
+                        class="inline-flex items-center gap-1.5 bg-github-card border border-github-border px-3 py-1 rounded-full text-xs text-github-link shadow-sm">
                         <span class="gesture-hint text-sm">👉</span>
                         <span class="text-[11px] font-medium text-github-text">Click arrows to browse demos</span>
                     </div>
 
                     <div class="flex items-center gap-1.5">
-                        <button onclick="prevSlide()" class="w-9 h-9 rounded-lg bg-github-card border border-github-border text-github-text hover:text-white hover:border-github-link hover:bg-github-hover flex items-center justify-center transition-all shadow" title="Previous Work">
+                        <button onclick="prevSlide()"
+                            class="w-9 h-9 rounded-lg bg-github-card border border-github-border text-github-text hover:text-white hover:border-github-link hover:bg-github-hover flex items-center justify-center transition-all shadow"
+                            title="Previous Work">
                             <i class="ph ph-arrow-left text-base font-bold"></i>
                         </button>
-                        <button onclick="nextSlide()" class="w-9 h-9 rounded-lg bg-github-card border border-github-border text-github-text hover:text-white hover:border-github-link hover:bg-github-hover flex items-center justify-center transition-all shadow" title="Next Work">
+                        <button onclick="nextSlide()"
+                            class="w-9 h-9 rounded-lg bg-github-card border border-github-border text-github-text hover:text-white hover:border-github-link hover:bg-github-hover flex items-center justify-center transition-all shadow"
+                            title="Next Work">
                             <i class="ph ph-arrow-right text-base font-bold"></i>
                         </button>
                     </div>
@@ -695,9 +950,11 @@
             </div>
 
             <!-- Slideshow Container -->
-            <div class="relative w-full rounded-xl overflow-hidden border border-github-border bg-github-card shadow-2xl">
+            <div
+                class="relative w-full rounded-xl overflow-hidden border border-github-border bg-github-card shadow-2xl">
                 <div id="slides-container" class="relative min-h-[360px] sm:min-h-[320px]"></div>
-                <div id="slide-indicators" class="absolute bottom-4 left-0 right-0 flex justify-center gap-2 z-20"></div>
+                <div id="slide-indicators" class="absolute bottom-4 left-0 right-0 flex justify-center gap-2 z-20">
+                </div>
             </div>
         </section>
 
@@ -711,7 +968,8 @@
                     <i class="ph ph-lightning text-yellow-400"></i> Skills Arsenal
                 </h2>
                 <p class="text-xs sm:text-sm text-github-muted mt-0.5">
-                    Hold cursor over any skill to trace its connection line to projects above (one-time interactive link).
+                    Hold cursor over any skill to trace its connection line to projects above (one-time interactive
+                    link).
                 </p>
             </div>
 
@@ -724,28 +982,38 @@
         <!-- SECTION 5: CONTACT & GET IN TOUCH                               -->
         <!-- =============================================================== -->
         <section id="contact" class="mb-14 scroll-mt-20 relative z-10">
-            <div class="bg-github-card border border-github-border rounded-xl p-6 sm:p-8 text-center max-w-3xl mx-auto shadow-xl relative overflow-hidden">
-                <div class="w-12 h-12 rounded-full bg-github-link/10 border border-github-link/30 text-github-link flex items-center justify-center mx-auto mb-4 text-2xl">
+            <div
+                class="bg-github-card border border-github-border rounded-xl p-6 sm:p-8 text-center max-w-3xl mx-auto shadow-xl relative overflow-hidden">
+                <div
+                    class="w-12 h-12 rounded-full bg-github-link/10 border border-github-link/30 text-github-link flex items-center justify-center mx-auto mb-4 text-2xl">
                     <i class="ph ph-envelope-open"></i>
                 </div>
 
-                <h2 class="text-2xl font-bold text-white mb-2">Let's Build Something Together!</h2>
+                <h2 class="text-2xl font-bold text-white mb-2">Let's Connect & Build!</h2>
                 <p class="text-github-muted text-sm sm:text-base mb-6 max-w-lg mx-auto">
-                    Have an internship opportunity, project collaboration, or question? Feel free to reach out directly via email or socials.
+                    Interested in discussing web development, embedded IoT, or project collaboration? Feel free to reach
+                    out directly.
                 </p>
 
                 <div class="flex flex-wrap justify-center gap-4 mb-6">
-                    <a href="mailto:navanish.dev@example.com" class="inline-flex items-center gap-2 bg-github-link hover:bg-blue-600 text-white text-sm px-5 py-2.5 rounded-lg font-semibold transition-colors shadow">
-                        <i class="ph ph-envelope-simple text-lg"></i> navanish.dev@example.com
+                    <a href="mailto:yourname@email.com"
+                        class="inline-flex items-center gap-2 bg-github-link hover:bg-blue-600 text-white text-sm px-5 py-2.5 rounded-lg font-semibold transition-colors shadow">
+                        <i class="ph ph-envelope-simple text-lg"></i> Send an Email
                     </a>
 
-                    <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 bg-github-border/60 hover:bg-github-border text-white text-sm px-5 py-2.5 rounded-lg font-semibold transition-colors border border-github-border">
+                    <a href="https://linkedin.com/in/navaneesh-a" target="_blank" rel="noopener noreferrer"
+                        class="inline-flex items-center gap-2 bg-github-border/60 hover:bg-github-border text-white text-sm px-5 py-2.5 rounded-lg font-semibold transition-colors border border-github-border">
                         <i class="ph ph-linkedin-logo text-lg text-[#0a66c2]"></i> Message on LinkedIn
+                    </a>
+
+                    <a href="https://leetcode.com/navaneesh2006" target="_blank" rel="noopener noreferrer"
+                        class="inline-flex items-center gap-2 bg-github-border/60 hover:bg-github-border text-white text-sm px-5 py-2.5 rounded-lg font-semibold transition-colors border border-github-border">
+                        <i class="ph ph-code text-lg text-yellow-400"></i> LeetCode Profile
                     </a>
                 </div>
 
                 <p class="text-xs text-github-muted">
-                    Based in India • Available for internships & freelance roles
+                    Based in Chennai / Madurai, India • Open for internships, open-source & technical collaborations
                 </p>
             </div>
         </section>
@@ -758,11 +1026,15 @@
     <!-- =================================================================== -->
     <footer class="border-t border-github-border bg-github-card py-6 text-center text-xs text-github-muted">
         <div class="max-w-6xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-3">
-            <p>© 2026 Navanish (நவனிஷ்). Built with HTML, Vanilla CSS & JS.</p>
+            <p>© 2026 Navaneesh. Built with HTML, Vanilla CSS & JS.</p>
             <div class="flex gap-4">
                 <a href="#about" class="hover:text-github-link transition-colors">Back to Top ↑</a>
-                <a href="https://github.com" target="_blank" class="hover:text-github-link transition-colors">GitHub</a>
-                <a href="https://linkedin.com" target="_blank" class="hover:text-github-link transition-colors">LinkedIn</a>
+                <a href="https://github.com/Navaneesh-A/" target="_blank"
+                    class="hover:text-github-link transition-colors">GitHub</a>
+                <a href="https://linkedin.com/in/navaneesh-a" target="_blank"
+                    class="hover:text-github-link transition-colors">LinkedIn</a>
+                <a href="https://leetcode.com/navaneesh2006" target="_blank"
+                    class="hover:text-github-link transition-colors">LeetCode</a>
             </div>
         </div>
     </footer>
@@ -771,23 +1043,28 @@
     <!-- =================================================================== -->
     <!-- MODAL 1: SIMPLE JOURNEY PROMPT                                      -->
     <!-- =================================================================== -->
-    <div id="journey-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/75 backdrop-blur-sm hidden opacity-0 transition-opacity duration-300 p-4">
-        <div id="journey-content" class="bg-github-card border border-github-border rounded-xl p-6 max-w-sm w-full shadow-2xl transform scale-95 transition-transform duration-300 relative text-center">
-            
-            <div class="w-12 h-12 bg-github-link/20 text-github-link rounded-full flex items-center justify-center mx-auto mb-3 text-2xl">
+    <div id="journey-modal"
+        class="fixed inset-0 z-50 flex items-center justify-center bg-black/75 backdrop-blur-sm hidden opacity-0 transition-opacity duration-300 p-4">
+        <div id="journey-content"
+            class="bg-github-card border border-github-border rounded-xl p-6 max-w-sm w-full shadow-2xl transform scale-95 transition-transform duration-300 relative text-center">
+
+            <div
+                class="w-12 h-12 bg-github-link/20 text-github-link rounded-full flex items-center justify-center mx-auto mb-3 text-2xl">
                 <i class="ph ph-rocket-launch"></i>
             </div>
-            
+
             <h4 class="text-lg font-bold text-white mb-2">Explore Projects?</h4>
             <p class="text-github-text text-sm mb-6 leading-relaxed">
-                Ready to check out the projects?
+                Ready to check out Navaneesh's projects?
             </p>
 
             <div class="flex gap-3 justify-center">
-                <button onclick="handleJourney(false)" class="px-4 py-2 text-xs font-medium rounded-lg border border-github-border text-github-text hover:bg-github-border transition-colors">
+                <button onclick="handleJourney(false)"
+                    class="px-4 py-2 text-xs font-medium rounded-lg border border-github-border text-github-text hover:bg-github-border transition-colors">
                     Keep Playing
                 </button>
-                <button onclick="handleJourney(true)" class="px-4 py-2 text-xs font-semibold rounded-lg bg-github-link text-white hover:bg-blue-600 transition-colors shadow-md flex items-center gap-1.5">
+                <button onclick="handleJourney(true)"
+                    class="px-4 py-2 text-xs font-semibold rounded-lg bg-github-link text-white hover:bg-blue-600 transition-colors shadow-md flex items-center gap-1.5">
                     See Projects <i class="ph ph-arrow-down"></i>
                 </button>
             </div>
@@ -798,33 +1075,40 @@
     <!-- =================================================================== -->
     <!-- MODAL 2: PROJECT DETAILS WITH REVOLVING SKILL ORBIT TRACK           -->
     <!-- =================================================================== -->
-    <div id="project-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/75 backdrop-blur-sm hidden opacity-0 transition-opacity duration-200 p-4">
-        <div id="project-modal-content" class="bg-github-card border border-github-border rounded-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl transform scale-95 transition-transform duration-200 relative p-6">
-            
-            <button onclick="closeProjectModal()" class="absolute top-4 right-4 w-8 h-8 rounded-full bg-github-border/60 hover:bg-github-border text-github-text hover:text-white flex items-center justify-center transition-colors">
+    <div id="project-modal"
+        class="fixed inset-0 z-50 flex items-center justify-center bg-black/75 backdrop-blur-sm hidden opacity-0 transition-opacity duration-200 p-4">
+        <div id="project-modal-content"
+            class="bg-github-card border border-github-border rounded-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl transform scale-95 transition-transform duration-200 relative p-6">
+
+            <button onclick="closeProjectModal()"
+                class="absolute top-4 right-4 w-8 h-8 rounded-full bg-github-border/60 hover:bg-github-border text-github-text hover:text-white flex items-center justify-center transition-colors">
                 <i class="ph ph-x text-lg"></i>
             </button>
 
             <!-- Revolving Orbit Track around Project Title -->
             <div class="orbit-container">
-                <div id="modal-orbit-track" class="orbit-track">
-                    <!-- Injected with revolving skill balls -->
-                </div>
-                <h3 id="modal-title" class="text-2xl font-bold text-white relative z-10 flex items-center gap-2 bg-github-card px-3 rounded-md"></h3>
+                <div id="modal-orbit-track" class="orbit-track"></div>
+                <h3 id="modal-title"
+                    class="text-2xl font-bold text-white relative z-10 flex items-center gap-2 bg-github-card px-3 rounded-md">
+                </h3>
             </div>
-            
-            <div id="modal-media-container" class="mb-4 rounded-lg overflow-hidden border border-github-border bg-github-bg"></div>
+
+            <div id="modal-media-container"
+                class="mb-4 rounded-lg overflow-hidden border border-github-border bg-github-bg"></div>
             <p id="modal-desc" class="text-github-text text-sm sm:text-base leading-relaxed mb-4"></p>
             <div id="modal-tags" class="flex flex-wrap gap-2 mb-6"></div>
 
             <div class="flex flex-wrap gap-3 pt-4 border-t border-github-border">
-                <a id="modal-live-link" href="#" target="_blank" class="inline-flex items-center gap-2 bg-github-link hover:bg-blue-600 text-white text-sm px-4 py-2 rounded-lg font-semibold transition-colors">
+                <a id="modal-live-link" href="#" target="_blank"
+                    class="inline-flex items-center gap-2 bg-github-link hover:bg-blue-600 text-white text-sm px-4 py-2 rounded-lg font-semibold transition-colors">
                     <i class="ph ph-arrow-square-out text-lg"></i> Live Demo
                 </a>
-                <a id="modal-repo-link" href="#" target="_blank" class="inline-flex items-center gap-2 bg-github-border hover:bg-github-muted/40 text-white text-sm px-4 py-2 rounded-lg font-semibold transition-colors border border-github-border">
+                <a id="modal-repo-link" href="#" target="_blank"
+                    class="inline-flex items-center gap-2 bg-github-border hover:bg-github-muted/40 text-white text-sm px-4 py-2 rounded-lg font-semibold transition-colors border border-github-border">
                     <i class="ph ph-github-logo text-lg"></i> View Source Code
                 </a>
-                <button onclick="closeProjectModal()" class="ml-auto text-sm text-github-muted hover:text-white px-3 py-2">
+                <button onclick="closeProjectModal()"
+                    class="ml-auto text-sm text-github-muted hover:text-white px-3 py-2">
                     Close
                 </button>
             </div>
@@ -833,33 +1117,78 @@
 
 
     <!-- =================================================================== -->
-    <!-- JAVASCRIPT: LOGIC & SKILL-TO-PROJECT THREAD / BALL MAPPING          -->
+    <!-- JAVASCRIPT: DATA & INTERACTIVE LOGIC                                -->
     <!-- =================================================================== -->
     <script>
-        /* Skills Mapping to Target Project IDs */
+        /* Navaneesh's Skills Mapping to Target Project IDs */
         const skillsData = [
-            { name: "React", targetProject: "project-campusai", desc: "Hooks, Router & Interactive UI", color: "text-blue-400", border: "#60a5fa", icon: "ph-atom" },
-            { name: "Node.js", targetProject: "project-nalam360", desc: "5+ Full-Stack APIs & Express", color: "text-green-400", border: "#22c55e", icon: "ph-hexagon" },
-            { name: "Java", targetProject: "project-leetcode", desc: "OOPs & Data Structures", color: "text-orange-400", border: "#f97316", icon: "ph-coffee" },
-            { name: "Python", targetProject: "project-campusai", desc: "Automation, OpenCV & Flask", color: "text-yellow-400", border: "#facc15", icon: "ph-file-py" },
-            { name: "MongoDB", targetProject: "project-nalam360", desc: "Schemas, Queries & Aggregation", color: "text-emerald-400", border: "#10b981", icon: "ph-database" },
-            { name: "ESP32", targetProject: "showcase", desc: "Microcontrollers & IoT Hardware", color: "text-red-400", border: "#f87171", icon: "ph-cpu" },
-            { name: "Tailwind", targetProject: "project-nalam360", desc: "Modern Responsive Layouts", color: "text-teal-400", border: "#2dd4bf", icon: "ph-paint-brush" },
-            { name: "C++", targetProject: "project-leetcode", desc: "Algorithms & Competitive Coding", color: "text-indigo-400", border: "#818cf8", icon: "ph-brackets-curly" }
+            { name: "Java", targetProject: "project-leetcode", desc: "OOP, Data Structures & Algorithms", color: "text-orange-400", border: "#f97316", icon: "ph-coffee" },
+            { name: "Node.js / Express", targetProject: "project-linkedin", desc: "Full-Stack Web Apps & APIs", color: "text-green-400", border: "#22c55e", icon: "ph-hexagon" },
+            { name: "ESP32 & Arduino", targetProject: "project-notes", desc: "Microcontrollers & Hardware IoT", color: "text-red-400", border: "#f87171", icon: "ph-cpu" },
+            { name: "MongoDB & Firebase", targetProject: "project-leetcode", desc: "Databases & Cloud Deployments", color: "text-emerald-400", border: "#10b981", icon: "ph-database" },
+            { name: "HTML & CSS", targetProject: "project-linkedin", desc: "Clean & Responsive Front-End", color: "text-blue-400", border: "#60a5fa", icon: "ph-paint-brush" },
+            { name: "C++", targetProject: "project-notes", desc: "Embedded Firmware & Algorithms", color: "text-indigo-400", border: "#818cf8", icon: "ph-brackets-curly" },
+            { name: "GraphQL & SSE", targetProject: "project-yt", desc: "Query Languages & Streaming", color: "text-purple-400", border: "#c084fc", icon: "ph-broadcast" },
+            { name: "Web Scraping", targetProject: "project-linkedin", desc: "Data Extraction & Automation", color: "text-yellow-400", border: "#facc15", icon: "ph-file-code" }
+        ];
+
+        /* Featured Works / Demos (Showcase Slideshow) */
+        const showcaseData = [
+            {
+                title: "ESP32 Notes Taker",
+                desc: "A wearable ESP32 prototype that pairs with external Bluetooth keyboards to write, digitize, and sync notes to the cloud in real-time.",
+                img: "img/feature_esp32_notes_taker.png",
+                fallbackImg: "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=800&q=80",
+                isVideo: false,
+                videoUrl: "",
+                tags: ["ESP32", "Bluetooth", "Cloud Firebase", "C++"],
+                link: "https://github.com/Navaneesh-A/ESP32_NOTES_TAKER"
+            },
+            {
+                title: "YouTube Trim Downloader",
+                desc: "An application to fetch video metadata, specify exact timestamps, and download trimmed video segments with live SSE stream updates.",
+                img: "img/feature_yt_trimmer.png",
+                fallbackImg: "https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?auto=format&fit=crop&w=800&q=80",
+                isVideo: false,
+                videoUrl: "",
+                tags: ["Node.js", "Express", "SSE", "FFmpeg"],
+                link: "https://github.com/Navaneesh-A/youtube-important-video-timeline"
+            },
+            {
+                title: "LinkedIn Post Saver",
+                desc: "A hosted web tool allowing multiple users to scrape, organize, and manage saved LinkedIn posts with custom tag filtering.",
+                img: "img/linkedin_saver.png",
+                fallbackImg: "https://images.unsplash.com/photo-1616469829941-c7200edec809?auto=format&fit=crop&w=800&q=80",
+                isVideo: false,
+                videoUrl: "",
+                tags: ["Express", "Web Scraping", "Local Storage"],
+                link: "https://linkedin-saved-post-together.onrender.com/"
+            },
+            {
+                title: "Joystick Laptop Controller",
+                desc: "A custom physical hardware interface utilizing Arduino and ESP32 with an analog joystick to switch desktop tabs and trigger system controls.",
+                img: "img/monitor project extra.png",
+                fallbackImg: "https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=800&q=80",
+                isVideo: false,
+                videoUrl: "",
+                tags: ["Arduino", "ESP32", "Hardware", "HID"],
+                link: "https://github.com/Navaneesh-A/"
+            }
         ];
 
         const happyEmojis = ['😎', '🤠', '✨', '🚀', '🔥', '🌟'];
-        const envyEmojis  = ['👀', '😒', '🤨', '🙄', '😤', '😠'];
+        const envyEmojis = ['👀', '😒', '🤨', '🙄', '😤', '😠'];
 
         let hoveredSkillsSet = new Set();
-        let triggeredSkillsSet = new Set(); // One-time trigger tracker
+        let triggeredSkillsSet = new Set();
         let journeyTriggered = false;
         let bubblesActive = true;
         let skillScrollTimeout = null;
         let returnScrollPosition = 0;
+        let activeTrackingFrame = null;
 
         /* ================================================================== */
-        /* 1. CARD CENTER-ONLY HOVER LOGIC (PREVENT ACCIDENTAL EDGE EXPANSION)*/
+        /* 1. CARD CENTER-ONLY HOVER LOGIC                                    */
         /* ================================================================== */
         function initProjectCardHovers() {
             const cards = document.querySelectorAll('.project-card');
@@ -885,10 +1214,35 @@
         }
 
         /* ================================================================== */
-        /* 2. SKILL TO PROJECT THREAD & ONE-TIME DOCKED BALL ANIMATION       */
+        /* 2. THREAD PATH CALCULATION (TOP SKILL -> BOTTOM PROJECT)           */
+        /* ================================================================== */
+        function updateThreadPath(srcElement, tgtElement) {
+            const line = document.getElementById('connection-line');
+            if (!line || !srcElement || !tgtElement) return;
+
+            const srcRect = srcElement.getBoundingClientRect();
+            const tgtRect = tgtElement.getBoundingClientRect();
+
+            const startX = srcRect.left + srcRect.width / 2;
+            const startY = srcRect.top;
+
+            const endX = tgtRect.left + tgtRect.width / 2;
+            const endY = tgtRect.bottom;
+
+            const deltaY = startY - endY;
+            const cp1X = startX;
+            const cp1Y = startY - (deltaY * 0.45);
+            const cp2X = endX;
+            const cp2Y = endY + (deltaY * 0.45);
+
+            const pathData = `M ${startX} ${startY} C ${cp1X} ${cp1Y}, ${cp2X} ${cp2Y}, ${endX} ${endY}`;
+            line.setAttribute('d', pathData);
+        }
+
+        /* ================================================================== */
+        /* 3. SKILL TO PROJECT LINK EXECUTION                                 */
         /* ================================================================== */
         function triggerSkillToProjectLink(skillObj, sourceElement) {
-            // Ensure this runs strictly once per skill
             if (triggeredSkillsSet.has(skillObj.name)) return;
             triggeredSkillsSet.add(skillObj.name);
 
@@ -899,24 +1253,18 @@
 
             returnScrollPosition = window.scrollY;
 
-            // Draw Curved SVG Thread Line flowing behind content
-            const srcRect = sourceElement.getBoundingClientRect();
-            const tgtRect = targetEl.getBoundingClientRect();
+            const dockPort = targetEl.querySelector('.project-thread-dock');
+            if (dockPort) dockPort.classList.add('active');
 
-            const startX = srcRect.left + srcRect.width / 2;
-            const startY = srcRect.top + srcRect.height / 2;
-            const endX = tgtRect.left + tgtRect.width / 2;
-            const endY = tgtRect.top + tgtRect.height / 2;
-
-            // Curve bezier path flowing from behind
-            const controlY = (startY + endY) / 2;
-            const pathData = `M ${startX} ${startY} Q ${startX + 80} ${controlY}, ${endX} ${endY}`;
-            
             const line = document.getElementById('connection-line');
-            line.setAttribute('d', pathData);
             line.setAttribute('opacity', '1');
 
-            // Launch Flying Orb Animation
+            function trackThread() {
+                updateThreadPath(sourceElement, targetEl);
+                activeTrackingFrame = requestAnimationFrame(trackThread);
+            }
+            trackThread();
+
             const orb = document.getElementById('flying-orb');
             const orbIcon = document.getElementById('flying-orb-icon');
             const orbText = document.getElementById('flying-orb-text');
@@ -925,24 +1273,22 @@
             orbText.innerText = skillObj.name;
             orb.style.borderColor = skillObj.border;
 
-            // Start position at skill element
-            orb.style.left = `${startX - 40}px`;
-            orb.style.top = `${startY - 20}px`;
+            const srcRect = sourceElement.getBoundingClientRect();
+            orb.style.left = `${srcRect.left + srcRect.width / 2 - 40}px`;
+            orb.style.top = `${srcRect.top - 20}px`;
             orb.style.opacity = '1';
             orb.style.transform = 'scale(1)';
 
-            // Fly into project card above
             requestAnimationFrame(() => {
-                orb.style.left = `${endX - 40}px`;
-                orb.style.top = `${endY - 30}px`;
+                const tgtRect = targetEl.getBoundingClientRect();
+                orb.style.left = `${tgtRect.left + tgtRect.width / 2 - 40}px`;
+                orb.style.top = `${tgtRect.bottom - 20}px`;
                 orb.style.transform = 'scale(1.1)';
             });
 
-            // Smooth scroll up to project
             targetEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
             targetEl.classList.add('highlight-project');
 
-            // Update docked ball
             const dockedBall = targetEl.querySelector('.docked-skill-ball');
             if (dockedBall) {
                 const titleSpan = dockedBall.querySelector('.skill-ball-title');
@@ -950,13 +1296,11 @@
                 dockedBall.classList.add('revealed');
             }
 
-            // Hide flying orb once reached
             setTimeout(() => {
                 orb.style.opacity = '0';
                 orb.style.transform = 'scale(0)';
             }, 850);
 
-            // Auto-scroll back after 5 seconds
             if (skillScrollTimeout) clearTimeout(skillScrollTimeout);
             skillScrollTimeout = setTimeout(() => {
                 cleanupSkillLink(targetEl);
@@ -964,16 +1308,25 @@
         }
 
         function cleanupSkillLink(targetEl) {
+            if (activeTrackingFrame) {
+                cancelAnimationFrame(activeTrackingFrame);
+                activeTrackingFrame = null;
+            }
             const line = document.getElementById('connection-line');
             if (line) line.setAttribute('opacity', '0');
-            if (targetEl) targetEl.classList.remove('highlight-project');
+
+            if (targetEl) {
+                targetEl.classList.remove('highlight-project');
+                const dockPort = targetEl.querySelector('.project-thread-dock');
+                if (dockPort) dockPort.classList.remove('active');
+            }
+
             if (returnScrollPosition > 0) {
                 window.scrollTo({ top: returnScrollPosition, behavior: 'smooth' });
                 returnScrollPosition = 0;
             }
         }
 
-        // Return scroll when cursor moves downward/away
         window.addEventListener('mousemove', (e) => {
             if (returnScrollPosition > 0 && e.clientY > window.innerHeight * 0.85) {
                 if (skillScrollTimeout) clearTimeout(skillScrollTimeout);
@@ -983,7 +1336,7 @@
         });
 
         /* ================================================================== */
-        /* 3. FLOATING BUBBLES GENERATOR                                      */
+        /* 4. FLOATING BUBBLES GENERATOR                                      */
         /* ================================================================== */
         function createSkillBubbles() {
             if (!bubblesActive) return;
@@ -1007,7 +1360,7 @@
                 bubble.style.maxWidth = '110px';
 
                 const happyEmoji = happyEmojis[index % happyEmojis.length];
-                const envyEmoji  = envyEmojis[index % envyEmojis.length];
+                const envyEmoji = envyEmojis[index % envyEmojis.length];
 
                 bubble.innerHTML = `
                     <span class="emoji-indicator absolute -top-3.5 -right-2 text-2xl opacity-0 transform scale-0 transition-all duration-300 pointer-events-none drop-shadow-md z-10">
@@ -1118,7 +1471,7 @@
         }
 
         /* ================================================================== */
-        /* 4. JOURNEY MODAL & POPPING LOGIC                                   */
+        /* 5. JOURNEY MODAL & POPPING LOGIC                                   */
         /* ================================================================== */
         function triggerJourneyModal() {
             journeyTriggered = true;
@@ -1151,11 +1504,11 @@
 
                     setTimeout(() => {
                         document.getElementById('bubbles-layer').innerHTML = '';
-                        
+
                         const projSection = document.getElementById('projects');
                         projSection.scrollIntoView({ behavior: 'smooth' });
 
-                        const firstCard = document.getElementById('project-campusai');
+                        const firstCard = document.getElementById('project-linkedin');
                         if (firstCard) {
                             firstCard.classList.add('highlight-project');
                             setTimeout(() => firstCard.classList.remove('highlight-project'), 3800);
@@ -1171,7 +1524,7 @@
         }
 
         /* ================================================================== */
-        /* 5. PERMANENT SKILLS GRID RENDERER (INTENT HOVER DELAY & 1-TIME)   */
+        /* 6. PERMANENT SKILLS GRID RENDERER                                  */
         /* ================================================================== */
         function renderPermanentSkills() {
             const grid = document.getElementById('permanent-skills-grid');
@@ -1193,11 +1546,10 @@
                     </div>
                 `;
 
-                // Hover Intent Delay (450ms): Prevents accidental trigger when mouse sweeps across
                 let hoverIntentTimer = null;
 
                 card.addEventListener('mouseenter', () => {
-                    if (triggeredSkillsSet.has(skill.name)) return; // One-time only
+                    if (triggeredSkillsSet.has(skill.name)) return;
 
                     hoverIntentTimer = setTimeout(() => {
                         triggerSkillToProjectLink(skill, card);
@@ -1213,63 +1565,15 @@
         }
 
         /* ================================================================== */
-        /* 6. FEATURED SHOWCASE SLIDESHOW (PHOTOS & VIDEOS)                   */
+        /* 7. FEATURED SHOWCASE SLIDESHOW                                     */
         /* ================================================================== */
-        const showcaseData = [
-            {
-                title: "ESP32 Real-Time Notes Taker",
-                desc: "A smart IoT hardware device utilizing ESP32 microcontroller to capture, digitize, and sync physical notes to the cloud via WebSockets.",
-                img: "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=800&q=80",
-                isVideo: false,
-                videoUrl: "", 
-                tags: ["IoT", "ESP32", "Hardware", "C++", "WebSockets"],
-                link: "https://github.com"
-            },
-            {
-                title: "LinkedIn Post Saver & Organizer",
-                desc: "A custom browser extension designed to instantly bookmark, categorize, and export insightful LinkedIn posts for offline reference.",
-                img: "https://images.unsplash.com/photo-1616469829941-c7200edec809?auto=format&fit=crop&w=800&q=80",
-                isVideo: false,
-                videoUrl: "",
-                tags: ["Chrome Extension", "JavaScript", "Storage API"],
-                link: "https://github.com"
-            },
-            {
-                title: "Laptop Movement & Theft Detection",
-                desc: "An automated security tool leveraging built-in device sensors and camera to detect unauthorized movement and dispatch instant alerts.",
-                img: "https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&w=800&q=80",
-                isVideo: false,
-                videoUrl: "",
-                tags: ["Python", "OpenCV", "Security", "SMTP"],
-                link: "https://github.com"
-            },
-            {
-                title: "Fast YouTube Clip Trimmer",
-                desc: "A lightweight client-side web utility to quickly select, trim timestamps, and download video portions without heavy desktop editors.",
-                img: "https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?auto=format&fit=crop&w=800&q=80",
-                isVideo: false,
-                videoUrl: "",
-                tags: ["Web App", "FFmpeg WASM", "TailwindCSS"],
-                link: "https://github.com"
-            },
-            {
-                title: "Interactive Keyboard Shortcuts Navigator",
-                desc: "A desktop productivity overlay that dynamically detects active window software and displays contextual keyboard shortcuts.",
-                img: "https://images.unsplash.com/photo-1587829741301-dc798b83add3?auto=format&fit=crop&w=800&q=80",
-                isVideo: false,
-                videoUrl: "",
-                tags: ["Electron", "JavaScript", "Productivity"],
-                link: "https://github.com"
-            }
-        ];
-
         let currentSlide = 0;
         let slideInterval = null;
 
         function initShowcase() {
             const container = document.getElementById('slides-container');
             const indicators = document.getElementById('slide-indicators');
-            
+
             if (!container || !indicators) return;
 
             container.innerHTML = '';
@@ -1282,18 +1586,12 @@
 
                 const tagsHtml = slide.tags.map(t => `<span class="text-xs bg-github-bg border border-github-border rounded-full px-3 py-1 text-github-text">${t}</span>`).join('');
 
-                let mediaHtml = '';
-                if (slide.isVideo && slide.videoUrl) {
-                    mediaHtml = `
-                        <div class="video-container w-full h-full">
-                            <iframe src="${slide.videoUrl}" allowfullscreen></iframe>
-                        </div>
-                    `;
-                } else {
-                    mediaHtml = `
-                        <img src="${slide.img}" alt="${slide.title}" class="w-full h-full object-cover opacity-90 hover:scale-105 transition-transform duration-700">
-                    `;
-                }
+                const mediaHtml = `
+                    <img src="${slide.img}" 
+                         onerror="this.onerror=null; this.src='${slide.fallbackImg}';"
+                         alt="${slide.title}" 
+                         class="w-full h-full object-cover opacity-90 hover:scale-105 transition-transform duration-700">
+                `;
 
                 slideEl.innerHTML = `
                     <div class="w-full md:w-3/5 h-48 md:h-full relative overflow-hidden bg-github-bg border-b md:border-b-0 md:border-r border-github-border">
@@ -1306,7 +1604,7 @@
                         <div class="flex flex-wrap gap-2 mb-6">${tagsHtml}</div>
                         <div>
                             <a href="${slide.link}" target="_blank" class="inline-flex items-center gap-1.5 text-xs font-semibold text-github-link hover:underline">
-                                Explore Project Details <i class="ph ph-arrow-right"></i>
+                                Explore Project / Demo <i class="ph ph-arrow-right"></i>
                             </a>
                         </div>
                     </div>
@@ -1353,19 +1651,18 @@
         function stopAutoSlide() { if (slideInterval) clearInterval(slideInterval); }
 
         /* ================================================================== */
-        /* 7. PROJECT MODAL POPUP & REVOLVING SKILL ORBITS                    */
+        /* 8. PROJECT MODAL POPUP & REVOLVING SKILL ORBITS                    */
         /* ================================================================== */
         function openProjectModal(title, description, mediaUrl, repoUrl, liveUrl, tags) {
             const modal = document.getElementById('project-modal');
             const content = document.getElementById('project-modal-content');
-            
+
             document.getElementById('modal-title').innerText = title;
             document.getElementById('modal-desc').innerText = description;
-            
-            // Build Revolving Orbiting Skill Balls around the Modal
+
             const orbitTrack = document.getElementById('modal-orbit-track');
             orbitTrack.innerHTML = '';
-            tags.forEach((tag, idx) => {
+            tags.forEach((tag) => {
                 const ball = document.createElement('div');
                 ball.className = 'orbit-ball';
                 ball.innerHTML = `⚡ ${tag}`;
@@ -1373,32 +1670,25 @@
             });
 
             const mediaContainer = document.getElementById('modal-media-container');
-            if (mediaUrl.endsWith('.mp4') || mediaUrl.includes('youtube.com') || mediaUrl.includes('youtu.be')) {
-                if (mediaUrl.includes('youtube.com') || mediaUrl.includes('youtu.be')) {
-                    mediaContainer.innerHTML = `
-                        <div class="video-container">
-                            <iframe src="${mediaUrl}" allowfullscreen></iframe>
-                        </div>
-                    `;
-                } else {
-                    mediaContainer.innerHTML = `
-                        <video controls class="w-full max-h-72 object-cover">
-                            <source src="${mediaUrl}" type="video/mp4">
-                            Your browser does not support HTML5 video.
-                        </video>
-                    `;
-                }
-            } else {
-                mediaContainer.innerHTML = `
-                    <img src="${mediaUrl}" alt="${title} Preview" class="w-full max-h-72 object-cover">
-                `;
-            }
+            mediaContainer.innerHTML = `
+                <img src="${mediaUrl}" 
+                     onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=800&q=80';"
+                     alt="${title} Preview" 
+                     class="w-full max-h-72 object-cover">
+            `;
 
             const tagsContainer = document.getElementById('modal-tags');
             tagsContainer.innerHTML = tags.map(t => `<span class="tech-badge text-xs px-2.5 py-1 rounded font-mono">${t}</span>`).join('');
 
-            document.getElementById('modal-repo-link').href = repoUrl || 'https://github.com';
-            document.getElementById('modal-live-link').href = liveUrl || '#';
+            const liveBtn = document.getElementById('modal-live-link');
+            if (liveUrl && liveUrl !== 'Coming Soon') {
+                liveBtn.href = liveUrl;
+                liveBtn.classList.remove('hidden');
+            } else {
+                liveBtn.classList.add('hidden');
+            }
+
+            document.getElementById('modal-repo-link').href = repoUrl || 'https://github.com/Navaneesh-A/';
 
             modal.classList.remove('hidden');
             setTimeout(() => {
@@ -1411,11 +1701,11 @@
         function closeProjectModal() {
             const modal = document.getElementById('project-modal');
             const content = document.getElementById('project-modal-content');
-            
+
             modal.classList.add('opacity-0');
             content.classList.remove('scale-100');
             content.classList.add('scale-95');
-            
+
             setTimeout(() => {
                 modal.classList.add('hidden');
                 document.getElementById('modal-media-container').innerHTML = '';
@@ -1436,4 +1726,5 @@
         });
     </script>
 </body>
+
 </html>
