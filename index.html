@@ -308,9 +308,6 @@
                 transform: translate3d(0, 0, 0) rotate(0deg);
             }
 
-            20% {
-                transform: translate3d(-3px, 2px, 0) rotate(-3deg);
-            }
 
             40% {
                 transform: translate3d(3px, -2px, 0) rotate(3deg);
@@ -320,9 +317,7 @@
                 transform: translate3d(-2px, -3px, 0) rotate(-2deg);
             }
 
-            80% {
-                transform: translate3d(2px, 2px, 0) rotate(2deg);
-            }
+
 
             100% {
                 transform: translate3d(0, 0, 0) rotate(0deg);
@@ -518,12 +513,12 @@
             <a href="#about" class="flex items-center gap-3 group">
                 <div
                     class="w-9 h-9 rounded-full bg-gradient-to-tr from-github-link to-purple-500 flex items-center justify-center text-white font-bold text-base shadow-sm group-hover:scale-105 transition-transform">
-                    ந
+
                 </div>
                 <div>
                     <span
                         class="font-semibold text-white text-sm leading-tight block group-hover:text-github-link transition-colors">
-                        Navaneesh (நவனிஷ்)
+                        Navaneesh (நவணீஷ்)
                     </span>
                     <span class="text-xs text-github-muted block">
                         3rd Year IT Student & Developer
@@ -578,7 +573,7 @@
                     <div class="flex-grow">
                         <div class="flex flex-wrap items-center gap-3 mb-2">
                             <h1 class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
-                                Navaneesh <span class="text-github-muted font-normal text-xl">(நவனிஷ்)</span>
+                                Navaneesh <span class="text-github-muted font-normal text-xl"></span>
                             </h1>
                             <span
                                 class="text-xs bg-github-border/70 text-github-text px-2.5 py-0.5 rounded-full border border-github-border">
@@ -608,7 +603,7 @@
                             </a>
 
                             <!-- LinkedIn Profile -->
-                            <a href="https://linkedin.com/in/navaneesh-a" target="_blank" rel="noopener noreferrer"
+                            <a href="https://www.linkedin.com/in/a-navaneesh/" target="_blank" rel="noopener noreferrer"
                                 class="inline-flex items-center gap-2 bg-github-border/60 hover:bg-github-border text-white text-sm px-4 py-2 rounded-md transition-colors border border-github-border font-medium">
                                 <i class="ph ph-linkedin-logo text-lg text-[#0a66c2]"></i> LinkedIn
                             </a>
@@ -709,7 +704,7 @@
                             <img src="img/linkedin_saver.png"
                                 onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1616469829941-c7200edec809?auto=format&fit=crop&w=600&q=80';"
                                 alt="LinkedIn Post Saver Preview"
-                                class="w-full h-32 rounded object-cover border border-github-border mb-2">
+                                class="w-full h-36 rounded object-cover object-top border border-github-border mb-2">
                             <p class="text-[11px] text-github-muted">
                                 Multi-user dashboard to organize saved LinkedIn content with search and categories.
                             </p>
@@ -773,7 +768,7 @@
                             <img src="img/esp32_notes_taker.png"
                                 onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=600&q=80';"
                                 alt="ESP32 Notes Taker Preview"
-                                class="w-full h-32 rounded object-cover border border-github-border mb-2">
+                                class="w-full h-36 rounded object-cover object-top border border-github-border mb-2">
                             <p class="text-[11px] text-github-muted">
                                 Portable note taking with Bluetooth HID keyboard pairing & real-time cloud backup.
                             </p>
@@ -837,7 +832,7 @@
                             <img src="img/yt_trimmer.png"
                                 onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?auto=format&fit=crop&w=600&q=80';"
                                 alt="YouTube Trim Downloader Preview"
-                                class="w-full h-32 rounded object-cover border border-github-border mb-2">
+                                class="w-full h-36 rounded object-cover object-top border border-github-border mb-2">
                             <p class="text-[11px] text-github-muted">
                                 Real-time server-sent events stream download progress directly to the client.
                             </p>
@@ -900,7 +895,7 @@
                             <img src="img/leetcode_track.png"
                                 onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=600&q=80';"
                                 alt="LeetCode Tracker Preview"
-                                class="w-full h-32 rounded object-cover border border-github-border mb-2">
+                                class="w-full h-36 rounded object-cover object-top border border-github-border mb-2">
                             <p class="text-[11px] text-github-muted">
                                 Visualizes coding metrics, difficulty breakdown, and daily problem streaks.
                             </p>
@@ -1094,7 +1089,8 @@
             </div>
 
             <div id="modal-media-container"
-                class="mb-4 rounded-lg overflow-hidden border border-github-border bg-github-bg"></div>
+                class="mb-4 rounded-lg overflow-hidden border border-github-border bg-github-bg flex items-center justify-center p-1.5 min-h-[200px]">
+            </div>
             <p id="modal-desc" class="text-github-text text-sm sm:text-base leading-relaxed mb-4"></p>
             <div id="modal-tags" class="flex flex-wrap gap-2 mb-6"></div>
 
@@ -1163,17 +1159,8 @@
                 videoUrl: "",
                 tags: ["Express", "Web Scraping", "Local Storage"],
                 link: "https://linkedin-saved-post-together.onrender.com/"
-            },
-            {
-                title: "Joystick Laptop Controller",
-                desc: "A custom physical hardware interface utilizing Arduino and ESP32 with an analog joystick to switch desktop tabs and trigger system controls.",
-                img: "img/monitor project extra.png",
-                fallbackImg: "https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=800&q=80",
-                isVideo: false,
-                videoUrl: "",
-                tags: ["Arduino", "ESP32", "Hardware", "HID"],
-                link: "https://github.com/Navaneesh-A/"
             }
+
         ];
 
         const happyEmojis = ['😎', '🤠', '✨', '🚀', '🔥', '🌟'];
@@ -1674,7 +1661,7 @@
                 <img src="${mediaUrl}" 
                      onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=800&q=80';"
                      alt="${title} Preview" 
-                     class="w-full max-h-72 object-cover">
+                     class="w-full max-h-[380px] object-contain rounded-md">
             `;
 
             const tagsContainer = document.getElementById('modal-tags');
