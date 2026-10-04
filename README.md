@@ -10,9 +10,9 @@ I am an Information Technology undergraduate with a passion for building interac
 
 ### ⚡ Technical Skills
 
-* **Languages:** Java, C++, JavaScript
-* **Web Development:** Node.js, Express, HTML, CSS (Full-Stack Web Apps & APIs)
-* **Hardware & IoT:** ESP32, Arduino, C++ (Microcontrollers, Sensor Prototyping, Hardware Integration)
+* **Languages:** Java,JavaScript
+* **Web Development:** Node.js, Express, HTML, CSS 
+* **Hardware & IoT:** ESP32, Arduino, C++ (Microcontrollers)
 * **Databases & Cloud:** MongoDB, MySQL, Cloud Firebase
 * **Core Concepts:** Object-Oriented Programming, Data Structures & Algorithms
 
@@ -26,20 +26,8 @@ A hosted, multi-user web tool for scraping, rendering, and managing saved Linked
 * **Live Demo:** [View App](https://linkedin-saved-post-together.onrender.com/)
 
 #### 2. [ESP32 Notes Taker](https://github.com/Navaneesh-A/note_tracker_class)
-A wearable ESP32 prototype that pairs with external Bluetooth keyboards to write and sync notes seamlessly.
+A ESP32 prototype that pairs with external Bluetooth keyboards to write and sync notes seamlessly.
 * **Tech:** ESP32, Bluetooth, Cloud Firebase
-
-#### 3. [LeetCode Study Tracker](https://github.com/Navaneesh-A/leetcode_tracker)
-A full-stack application that fetches and tracks user statistics and recent algorithmic submissions to maintain consistent practice.
-* **Tech:** Node.js, Express, MongoDB, GraphQL
-
-#### 4. YouTube Trim Downloader
-A web application to fetch video metadata, specify timestamps, and download trimmed segments of videos.
-* **Tech:** Node.js, Express, SSE
-
-#### 5. Joystick Laptop Controller
-A hardware interface using a joystick to switch tabs and perform basic laptop controls.
-* **Tech:** Arduino, ESP32
 
 ---
 
