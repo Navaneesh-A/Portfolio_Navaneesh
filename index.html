@@ -1,0 +1,1439 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- =================================================================== -->
+    <!-- [EDIT HERE]: BROWSER TAB TITLE & META TAGS                          -->
+    <!-- =================================================================== -->
+    <title>நவனிஷ் (Navanish) | Developer Portfolio</title>
+    <meta name="description" content="Portfolio of Navanish - 3rd Year IT Student, Full Stack Developer & IoT Enthusiast">
+    <meta name="keywords" content="Navanish, Developer, Portfolio, IT Student, React, Node.js, Python, IoT, Web Development">
+    <meta name="author" content="Navanish">
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts: Inter & Fira Code -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    
+    <!-- Phosphor Icons (GitHub-style clean icons) -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+    <!-- Tailwind Configuration -->
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['Fira Code', 'monospace'],
+                    },
+                    colors: {
+                        github: {
+                            bg: '#0d1117',
+                            canvas: '#010409',
+                            card: '#161b22',
+                            border: '#30363d',
+                            text: '#c9d1d9',
+                            muted: '#8b949e',
+                            link: '#58a6ff',
+                            hover: '#1f242c',
+                            green: '#238636',
+                            greenHover: '#2ea043',
+                            accent: '#7ee787'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Lag-Free Optimized Styles & Interactive Animations -->
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        body {
+            background-color: #0d1117;
+            color: #c9d1d9;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            overflow-x: hidden;
+        }
+
+        /* Custom GitHub-style scrollbar */
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: #0d1117; }
+        ::-webkit-scrollbar-thumb { background: #30363d; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #8b949e; }
+
+        /* ================================================================= */
+        /* PROJECT CARDS: Intentional Center Hover Only (Edge Safe)           */
+        /* ================================================================= */
+        .project-card {
+            transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+            position: relative;
+        }
+
+        /* Card active hover state triggered strictly when hovering the inner body */
+        .project-card.active-hover {
+            transform: translateY(-4px);
+            border-color: #58a6ff;
+            box-shadow: 0 12px 28px -5px rgba(0, 0, 0, 0.6), 0 0 20px -3px rgba(88, 166, 255, 0.25);
+        }
+
+        /* Expandable section inside project card */
+        .expandable-preview {
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+            transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease, margin-top 0.3s ease;
+        }
+        .project-card.active-hover .expandable-preview {
+            max-height: 500px;
+            opacity: 1;
+            margin-top: 0.75rem;
+        }
+
+        /* Highlight animation for project card */
+        @keyframes highlightPulse {
+            0%, 100% {
+                border-color: #58a6ff;
+                box-shadow: 0 0 0 4px rgba(88, 166, 255, 0.4), 0 0 30px rgba(88, 166, 255, 0.6);
+                transform: scale(1.02);
+            }
+            50% {
+                border-color: #7ee787;
+                box-shadow: 0 0 0 6px rgba(126, 231, 135, 0.5), 0 0 40px rgba(126, 231, 135, 0.7);
+                transform: scale(1.03);
+            }
+        }
+        .highlight-project {
+            animation: highlightPulse 1.2s ease-in-out 3;
+            border-color: #58a6ff !important;
+        }
+
+        /* Docked Skill Badge behind project card */
+        .docked-skill-ball {
+            position: absolute;
+            top: -14px;
+            right: 20px;
+            background: #161b22;
+            border: 1.5px solid #58a6ff;
+            border-radius: 9999px;
+            padding: 4px 12px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            box-shadow: 0 4px 14px rgba(88, 166, 255, 0.4);
+            transform: translateY(10px) scale(0.6);
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            z-index: 20;
+        }
+        .project-card:hover .docked-skill-ball,
+        .docked-skill-ball.revealed {
+            transform: translateY(0) scale(1);
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        /* Tag badge styling */
+        .tech-badge {
+            background-color: rgba(56, 139, 253, 0.1);
+            color: #58a6ff;
+            border: 1px solid rgba(56, 139, 253, 0.2);
+            transition: all 0.2s ease;
+        }
+        .tech-badge:hover {
+            background-color: rgba(56, 139, 253, 0.2);
+            border-color: #58a6ff;
+        }
+
+        /* Video container responsive aspect ratio */
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+            border-radius: 0.5rem;
+        }
+        .video-container iframe,
+        .video-container video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
+        /* ================================================================= */
+        /* FLOATING SKILL BUBBLES                                            */
+        /* ================================================================= */
+        .bubble-wrapper {
+            position: fixed;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            z-index: 25;
+            will-change: transform;
+        }
+
+        @keyframes floatLeftBubble {
+            0% { transform: translate3d(-3vw, 105vh, 0) scale(0.85); opacity: 0; }
+            10% { opacity: 0.95; transform: translate3d(4vw, 85vh, 0) scale(1); }
+            50% { transform: translate3d(9vw, 50vh, 0) scale(1.02); }
+            90% { opacity: 0.95; transform: translate3d(3vw, 15vh, 0) scale(1); }
+            100% { transform: translate3d(6vw, -10vh, 0) scale(0.85); opacity: 0; }
+        }
+
+        @keyframes floatRightBubble {
+            0% { transform: translate3d(103vw, 105vh, 0) scale(0.85); opacity: 0; }
+            10% { opacity: 0.95; transform: translate3d(88vw, 85vh, 0) scale(1); }
+            50% { transform: translate3d(83vw, 50vh, 0) scale(1.02); }
+            90% { opacity: 0.95; transform: translate3d(89vw, 15vh, 0) scale(1); }
+            100% { transform: translate3d(85vw, -10vh, 0) scale(0.85); opacity: 0; }
+        }
+
+        .skill-bubble {
+            pointer-events: auto;
+            display: flex;
+            align-items: center;
+            background: rgba(22, 27, 34, 0.9);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1.5px solid #30363d;
+            border-radius: 9999px;
+            cursor: pointer;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+            white-space: nowrap;
+            transition: max-width 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+                        border-color 0.3s ease,
+                        box-shadow 0.3s ease,
+                        transform 0.3s ease;
+            position: relative;
+            user-select: none;
+            will-change: transform, max-width;
+        }
+
+        /* Jealous Frantic Jitter / Shaky Animation */
+        @keyframes jealousJitter {
+            0% { transform: translate3d(0, 0, 0) rotate(0deg); }
+            20% { transform: translate3d(-3px, 2px, 0) rotate(-3deg); }
+            40% { transform: translate3d(3px, -2px, 0) rotate(3deg); }
+            60% { transform: translate3d(-2px, -3px, 0) rotate(-2deg); }
+            80% { transform: translate3d(2px, 2px, 0) rotate(2deg); }
+            100% { transform: translate3d(0, 0, 0) rotate(0deg); }
+        }
+
+        .bubble-shaky {
+            animation: jealousJitter 0.18s infinite !important;
+            border-color: #f85149 !important;
+            box-shadow: 0 0 16px rgba(248, 81, 73, 0.6) !important;
+        }
+
+        @keyframes bubbleBurst {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.4) rotate(45deg); opacity: 0.8; }
+            100% { transform: scale(0) rotate(180deg); opacity: 0; }
+        }
+        .bubble-bursting {
+            animation: bubbleBurst 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards !important;
+        }
+
+        /* Hand Gesture Floating Hint */
+        @keyframes handGesture {
+            0%, 100% { transform: translateX(0); }
+            50% { transform: translateX(6px); }
+        }
+        .gesture-hint {
+            animation: handGesture 1.4s ease-in-out infinite;
+        }
+
+        /* Flying Skill Orb Animation Layer */
+        #flying-orb {
+            position: fixed;
+            pointer-events: none;
+            z-index: 999;
+            transition: all 0.85s cubic-bezier(0.22, 1, 0.36, 1);
+            opacity: 0;
+            transform: scale(0);
+        }
+
+        /* Dynamic SVG Thread Connection Layer - Positioned Behind Main Sections (z-index: 5) */
+        #thread-svg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 5; /* Flows behind sections and featured works */
+        }
+        .thread-path {
+            stroke-dasharray: 10, 6;
+            animation: dashFlow 1.2s linear infinite;
+        }
+        @keyframes dashFlow {
+            from { stroke-dashoffset: 32; }
+            to { stroke-dashoffset: 0; }
+        }
+
+        /* ================================================================= */
+        /* ORBITING / REVOLVING SKILL BALLS AROUND PROJECT MODAL             */
+        /* ================================================================= */
+        .orbit-container {
+            position: relative;
+            width: 100%;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 0.5rem;
+            overflow: visible;
+        }
+        .orbit-track {
+            position: absolute;
+            width: 90%;
+            height: 48px;
+            border: 1px dashed rgba(88, 166, 255, 0.25);
+            border-radius: 9999px;
+            animation: rotateOrbit 12s linear infinite;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 10px;
+        }
+        @keyframes rotateOrbit {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .orbit-ball {
+            background: #161b22;
+            border: 1.5px solid #58a6ff;
+            border-radius: 9999px;
+            padding: 2px 8px;
+            font-size: 11px;
+            font-family: 'Fira Code', monospace;
+            color: #fff;
+            box-shadow: 0 0 10px rgba(88, 166, 255, 0.4);
+            animation: counterRotate 12s linear infinite;
+            white-space: nowrap;
+        }
+        @keyframes counterRotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(-360deg); }
+        }
+
+        /* Skill Card Already Triggered State */
+        .skill-card-triggered {
+            border-color: rgba(88, 166, 255, 0.3) !important;
+            opacity: 0.85;
+        }
+    </style>
+</head>
+
+<body class="antialiased min-h-screen flex flex-col selection:bg-github-link selection:text-white">
+
+    <!-- =================================================================== -->
+    <!-- DYNAMIC SVG THREAD CONNECTION (BEHIND CONTENT AT z-index: 5)        -->
+    <!-- =================================================================== -->
+    <svg id="thread-svg">
+        <defs>
+            <linearGradient id="threadGradient" x1="0%" y1="100%" x2="0%" y2="0%">
+                <stop offset="0%" stop-color="#58a6ff" stop-opacity="0.8" />
+                <stop offset="50%" stop-color="#a371f7" stop-opacity="0.6" />
+                <stop offset="100%" stop-color="#7ee787" stop-opacity="0.9" />
+            </linearGradient>
+            <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+                <feGaussianBlur stdDeviation="3" result="glow"/>
+                <feComposite in="SourceGraphic" in2="glow" operator="over"/>
+            </filter>
+        </defs>
+        <path id="connection-line" d="" fill="none" stroke="url(#threadGradient)" stroke-width="3.5" filter="url(#glow)" class="thread-path" opacity="0"></path>
+    </svg>
+
+    <!-- Flying Skill Orb Element -->
+    <div id="flying-orb" class="bg-[#161b22] border-2 border-github-link rounded-full px-4 py-2 shadow-2xl flex items-center gap-2">
+        <i id="flying-orb-icon" class="ph ph-atom text-github-link text-lg"></i>
+        <span id="flying-orb-text" class="text-white font-bold text-sm">React</span>
+    </div>
+
+    <!-- Floating Skill Bubbles Container -->
+    <div id="bubbles-layer" class="fixed inset-0 pointer-events-none z-30 overflow-hidden"></div>
+
+    <!-- =================================================================== -->
+    <!-- NAVIGATION BAR                                                      -->
+    <!-- =================================================================== -->
+    <header class="border-b border-github-border bg-github-bg/90 backdrop-blur-md sticky top-0 z-40">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 py-3.5 flex justify-between items-center">
+            
+            <!-- Left: Brand / Avatar -->
+            <a href="#about" class="flex items-center gap-3 group">
+                <div class="w-9 h-9 rounded-full bg-gradient-to-tr from-github-link to-purple-500 flex items-center justify-center text-white font-bold text-base shadow-sm group-hover:scale-105 transition-transform">
+                    ந
+                </div>
+                <div>
+                    <span class="font-semibold text-white text-sm leading-tight block group-hover:text-github-link transition-colors">
+                        நவனிஷ் (Navanish)
+                    </span>
+                    <span class="text-xs text-github-muted block">
+                        3rd Year IT Student & Developer
+                    </span>
+                </div>
+            </a>
+
+            <!-- Right: Navigation Links -->
+            <nav class="flex items-center gap-2 sm:gap-6 text-sm font-medium">
+                <a href="#about" class="text-github-text hover:text-github-link transition-colors px-2 py-1 rounded">About</a>
+                <a href="#projects" class="text-github-text hover:text-github-link transition-colors px-2 py-1 rounded">Projects</a>
+                <a href="#showcase" class="text-github-text hover:text-github-link transition-colors px-2 py-1 rounded">Showcase</a>
+                <a href="#skills" class="text-github-text hover:text-github-link transition-colors px-2 py-1 rounded">Skills</a>
+                <a href="#contact" class="hidden sm:inline-flex items-center gap-1.5 bg-github-green hover:bg-github-greenHover text-white text-xs px-3 py-1.5 rounded-md font-semibold transition-colors shadow-sm">
+                    <i class="ph ph-paper-plane-tilt"></i> Contact
+                </a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- =================================================================== -->
+    <!-- MAIN CONTENT CONTAINER                                              -->
+    <!-- =================================================================== -->
+    <main class="flex-grow max-w-6xl mx-auto px-4 sm:px-6 py-10 w-full relative z-10">
+
+        <!-- =============================================================== -->
+        <!-- SECTION 1: HERO / ABOUT PROFILE                                 -->
+        <!-- =============================================================== -->
+        <section id="about" class="mb-14 scroll-mt-20">
+            <div class="bg-github-card border border-github-border rounded-xl p-6 sm:p-8 shadow-xl relative overflow-hidden">
+                <div class="flex flex-col md:flex-row gap-6 md:gap-8 items-start relative z-10">
+                    
+                    <!-- Profile Photo -->
+                    <div class="flex-shrink-0 relative group">
+                        <img 
+                            src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&h=400&q=80" 
+                            alt="Navanish Profile Photo" 
+                            class="w-28 h-28 sm:w-36 sm:h-36 rounded-2xl object-cover border-2 border-github-border group-hover:border-github-link shadow-lg transition-all"
+                        >
+                        <div class="absolute -bottom-2 -right-2 bg-github-bg border border-github-border text-xs px-2.5 py-1 rounded-full text-github-accent flex items-center gap-1.5 shadow">
+                            <span class="w-2 h-2 rounded-full bg-github-accent animate-pulse"></span> Open to Work
+                        </div>
+                    </div>
+
+                    <!-- Profile Bio -->
+                    <div class="flex-grow">
+                        <div class="flex flex-wrap items-center gap-3 mb-2">
+                            <h1 class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
+                                Navanish <span class="text-github-muted font-normal text-xl">(நவனிஷ்)</span>
+                            </h1>
+                            <span class="text-xs bg-github-border/70 text-github-text px-2.5 py-0.5 rounded-full border border-github-border">
+                                B.Tech / BE IT • 3rd Year
+                            </span>
+                        </div>
+
+                        <p class="text-github-link font-medium text-sm sm:text-base mb-3">
+                            Full-Stack Developer • IoT & Embedded Hardware Enthusiast • Problem Solver
+                        </p>
+
+                        <p class="text-github-text leading-relaxed text-sm sm:text-base mb-6 max-w-3xl">
+                            I am a passionate 3rd-year Information Technology student driven by turning ideas into high-performing, real-world software. I specialize in building responsive web applications, secure RESTful backends, and experimenting with microcontrollers like the ESP32.
+                        </p>
+
+                        <!-- Action Buttons -->
+                        <div class="flex flex-wrap items-center gap-3">
+                            <a href="https://github.com" target="_blank" rel="noopener noreferrer" 
+                               class="inline-flex items-center gap-2 bg-github-border/60 hover:bg-github-border text-white text-sm px-4 py-2 rounded-md transition-colors border border-github-border font-medium">
+                                <i class="ph ph-github-logo text-lg text-white"></i> GitHub Profile
+                            </a>
+
+                            <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" 
+                               class="inline-flex items-center gap-2 bg-github-border/60 hover:bg-github-border text-white text-sm px-4 py-2 rounded-md transition-colors border border-github-border font-medium">
+                                <i class="ph ph-linkedin-logo text-lg text-[#0a66c2]"></i> LinkedIn
+                            </a>
+
+                            <a href="#" onclick="alert('Attach your resume PDF in the href attribute!'); return false;" 
+                               class="inline-flex items-center gap-2 bg-github-border/60 hover:bg-github-border text-white text-sm px-4 py-2 rounded-md transition-colors border border-github-border font-medium">
+                                <i class="ph ph-file-text text-lg text-yellow-400"></i> Resume / CV
+                            </a>
+
+                            <a href="#contact" 
+                               class="inline-flex items-center gap-2 bg-github-link hover:bg-blue-600 text-white text-sm px-4 py-2 rounded-md transition-colors font-medium shadow-sm">
+                                <i class="ph ph-envelope-simple text-lg"></i> Contact Me
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+
+        <!-- =============================================================== -->
+        <!-- SECTION 2: PINNED PROJECTS (CENTER-FOCUSED HOVER INTERACTION)  -->
+        <!-- =============================================================== -->
+        <section id="projects" class="mb-14 scroll-mt-20">
+            <div class="flex items-center justify-between mb-6">
+                <div>
+                    <h2 class="text-xl sm:text-2xl font-bold text-white flex items-center gap-2.5">
+                        <i class="ph ph-push-pin text-github-link"></i> Pinned Projects
+                    </h2>
+                    <p class="text-xs sm:text-sm text-github-muted mt-0.5">
+                        Hover card centers for interactive previews, or click for full project modal & revolving skills.
+                    </p>
+                </div>
+                <span class="text-xs bg-github-card border border-github-border text-github-muted px-2.5 py-1 rounded-full font-mono">
+                    3 Repositories
+                </span>
+            </div>
+
+            <!-- Projects Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+                <!-- ======================================================= -->
+                <!-- [PROJECT 1]: CAMPUS AI (React / Python / Flask)         -->
+                <!-- ======================================================= -->
+                <div id="project-campusai" data-skills="React,Python,Flask" class="project-card bg-github-card border border-github-border rounded-xl flex flex-col justify-between cursor-pointer overflow-visible"
+                     onclick="openProjectModal('CampusAI', 'An AI-driven campus assistant built to streamline student workflows, timetable scheduling, and smart queries.', 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=800&q=80', 'https://github.com', 'https://example.com', ['React', 'Python', 'Flask', 'OpenAI API'])">
+                    
+                    <!-- Docked Skill Ball (Unhides when hovering from skills or direct hover) -->
+                    <div class="docked-skill-ball">
+                        <i class="ph ph-atom text-blue-400"></i>
+                        <span class="text-xs text-white font-medium skill-ball-title">React Linked</span>
+                    </div>
+
+                    <!-- Inner Centered Hover Trigger Zone (Edges safe from accidental triggers) -->
+                    <div class="card-inner-zone p-5">
+                        <div class="flex justify-between items-start mb-2">
+                            <div class="flex items-center gap-2">
+                                <i class="ph ph-book-bookmark text-github-muted text-lg"></i>
+                                <a href="https://github.com" target="_blank" onclick="event.stopPropagation()" class="font-bold text-github-link hover:underline text-lg">
+                                    CampusAI
+                                </a>
+                            </div>
+                            <span class="text-[11px] border border-github-border rounded-full px-2 py-0.5 text-github-muted">Public</span>
+                        </div>
+
+                        <p class="text-github-muted text-xs sm:text-sm mb-4 leading-relaxed line-clamp-2">
+                            An AI-driven campus assistant built to streamline student workflows, timetable scheduling, and university resource discovery.
+                        </p>
+
+                        <div class="flex flex-wrap gap-1.5 mb-3">
+                            <span class="tech-badge text-[11px] px-2 py-0.5 rounded font-mono">React</span>
+                            <span class="tech-badge text-[11px] px-2 py-0.5 rounded font-mono">Flask</span>
+                            <span class="tech-badge text-[11px] px-2 py-0.5 rounded font-mono">Python</span>
+                        </div>
+
+                        <div class="flex items-center gap-4 text-xs text-github-muted pt-2 border-t border-github-border/50">
+                            <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-blue-400"></span> Python / JS</span>
+                            <span class="flex items-center gap-1"><i class="ph ph-star"></i> 18</span>
+                            <span class="flex items-center gap-1"><i class="ph ph-git-fork"></i> 4</span>
+                        </div>
+
+                        <div class="expandable-preview border-t border-github-border pt-3">
+                            <p class="text-xs text-white font-medium mb-1.5 flex items-center gap-1">
+                                <i class="ph ph-eye text-github-link"></i> Interface Preview:
+                            </p>
+                            <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=600&q=80" 
+                                 alt="CampusAI Preview Screenshot" 
+                                 class="w-full h-28 rounded object-cover border border-github-border mb-2"
+                            >
+                            <p class="text-[11px] text-github-muted">
+                                Integrates university APIs with fine-tuned LLM queries and live timetable alerts.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- ======================================================= -->
+                <!-- [PROJECT 2]: NALAM 360 HEALTHCARE (Node.js / MongoDB)  -->
+                <!-- ======================================================= -->
+                <div id="project-nalam360" data-skills="Node.js,MongoDB,Tailwind" class="project-card bg-github-card border border-github-border rounded-xl flex flex-col justify-between cursor-pointer overflow-visible"
+                     onclick="openProjectModal('Nalam360', 'A holistic healthcare platform linking rural health clinics to urban specialists with offline-first synchronization.', 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=800&q=80', 'https://github.com', 'https://example.com', ['Node.js', 'Express', 'MongoDB', 'TailwindCSS'])">
+                    
+                    <div class="docked-skill-ball">
+                        <i class="ph ph-hexagon text-green-400"></i>
+                        <span class="text-xs text-white font-medium skill-ball-title">Node.js Linked</span>
+                    </div>
+
+                    <div class="card-inner-zone p-5">
+                        <div class="flex justify-between items-start mb-2">
+                            <div class="flex items-center gap-2">
+                                <i class="ph ph-book-bookmark text-github-muted text-lg"></i>
+                                <a href="https://github.com" target="_blank" onclick="event.stopPropagation()" class="font-bold text-github-link hover:underline text-lg">
+                                    Nalam360
+                                </a>
+                            </div>
+                            <span class="text-[11px] border border-github-border rounded-full px-2 py-0.5 text-github-muted">Public</span>
+                        </div>
+
+                        <p class="text-github-muted text-xs sm:text-sm mb-4 leading-relaxed line-clamp-2">
+                            A holistic healthcare platform linking rural clinics to urban medical specialists with encrypted offline-first synchronization.
+                        </p>
+
+                        <div class="flex flex-wrap gap-1.5 mb-3">
+                            <span class="tech-badge text-[11px] px-2 py-0.5 rounded font-mono">Node.js</span>
+                            <span class="tech-badge text-[11px] px-2 py-0.5 rounded font-mono">MongoDB</span>
+                            <span class="tech-badge text-[11px] px-2 py-0.5 rounded font-mono">Tailwind</span>
+                        </div>
+
+                        <div class="flex items-center gap-4 text-xs text-github-muted pt-2 border-t border-github-border/50">
+                            <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-green-500"></span> JavaScript</span>
+                            <span class="flex items-center gap-1"><i class="ph ph-star"></i> 26</span>
+                            <span class="flex items-center gap-1"><i class="ph ph-git-fork"></i> 7</span>
+                        </div>
+
+                        <div class="expandable-preview border-t border-github-border pt-3">
+                            <p class="text-xs text-white font-medium mb-1.5 flex items-center gap-1">
+                                <i class="ph ph-eye text-github-link"></i> Interface Preview:
+                            </p>
+                            <img src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=600&q=80" 
+                                 alt="Nalam360 Preview Screenshot" 
+                                 class="w-full h-28 rounded object-cover border border-github-border mb-2"
+                            >
+                            <p class="text-[11px] text-github-muted">
+                                Built with local caching for remote areas, syncing records when connection restores.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- ======================================================= -->
+                <!-- [PROJECT 3]: LEETCODE TRACKER (Java / C++)              -->
+                <!-- ======================================================= -->
+                <div id="project-leetcode" data-skills="Java,C++" class="project-card bg-github-card border border-github-border rounded-xl flex flex-col justify-between cursor-pointer overflow-visible"
+                     onclick="openProjectModal('LeetCode-Tracker', 'A dynamic statistical dashboard that pulls data from LeetCode APIs to track daily coding habits and performance metrics.', 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80', 'https://github.com', 'https://example.com', ['Java', 'Spring Boot', 'Chart.js', 'REST API'])">
+                    
+                    <div class="docked-skill-ball">
+                        <i class="ph ph-coffee text-orange-400"></i>
+                        <span class="text-xs text-white font-medium skill-ball-title">Java Linked</span>
+                    </div>
+
+                    <div class="card-inner-zone p-5">
+                        <div class="flex justify-between items-start mb-2">
+                            <div class="flex items-center gap-2">
+                                <i class="ph ph-book-bookmark text-github-muted text-lg"></i>
+                                <a href="https://github.com" target="_blank" onclick="event.stopPropagation()" class="font-bold text-github-link hover:underline text-lg">
+                                    leetcode-tracker
+                                </a>
+                            </div>
+                            <span class="text-[11px] border border-github-border rounded-full px-2 py-0.5 text-github-muted">Public</span>
+                        </div>
+
+                        <p class="text-github-muted text-xs sm:text-sm mb-4 leading-relaxed line-clamp-2">
+                            A dynamic statistical dashboard that pulls data from LeetCode to track daily coding habits, problem distribution, and streaks.
+                        </p>
+
+                        <div class="flex flex-wrap gap-1.5 mb-3">
+                            <span class="tech-badge text-[11px] px-2 py-0.5 rounded font-mono">Java</span>
+                            <span class="tech-badge text-[11px] px-2 py-0.5 rounded font-mono">C++</span>
+                            <span class="tech-badge text-[11px] px-2 py-0.5 rounded font-mono">Chart.js</span>
+                        </div>
+
+                        <div class="flex items-center gap-4 text-xs text-github-muted pt-2 border-t border-github-border/50">
+                            <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-orange-500"></span> Java</span>
+                            <span class="flex items-center gap-1"><i class="ph ph-star"></i> 12</span>
+                            <span class="flex items-center gap-1"><i class="ph ph-git-fork"></i> 3</span>
+                        </div>
+
+                        <div class="expandable-preview border-t border-github-border pt-3">
+                            <p class="text-xs text-white font-medium mb-1.5 flex items-center gap-1">
+                                <i class="ph ph-eye text-github-link"></i> Interface Preview:
+                            </p>
+                            <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=600&q=80" 
+                                 alt="LeetCode Tracker Preview Screenshot" 
+                                 class="w-full h-28 rounded object-cover border border-github-border mb-2"
+                            >
+                            <p class="text-[11px] text-github-muted">
+                                Visualizes coding metrics, difficulty breakdown, and submission patterns in real-time.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+
+        <!-- =============================================================== -->
+        <!-- SECTION 3: FEATURED SHOWCASE SLIDESHOW & GESTURE HINT           -->
+        <!-- =============================================================== -->
+        <section id="showcase" class="mb-14 scroll-mt-20 relative z-10">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
+                <div>
+                    <h2 class="text-xl sm:text-2xl font-bold text-white flex items-center gap-2.5">
+                        <i class="ph ph-film-slate text-purple-400"></i> Featured Works & Demonstrations
+                    </h2>
+                    <p class="text-xs sm:text-sm text-github-muted mt-0.5">
+                        Interactive showcase highlighting IoT hardware, browser extensions, and web utilities.
+                    </p>
+                </div>
+                
+                <!-- Controls & Interactive Gesture Hint -->
+                <div class="flex items-center gap-3 self-start sm:self-auto">
+                    <div class="inline-flex items-center gap-1.5 bg-github-card border border-github-border px-3 py-1 rounded-full text-xs text-github-link shadow-sm">
+                        <span class="gesture-hint text-sm">👉</span>
+                        <span class="text-[11px] font-medium text-github-text">Click arrows to browse demos</span>
+                    </div>
+
+                    <div class="flex items-center gap-1.5">
+                        <button onclick="prevSlide()" class="w-9 h-9 rounded-lg bg-github-card border border-github-border text-github-text hover:text-white hover:border-github-link hover:bg-github-hover flex items-center justify-center transition-all shadow" title="Previous Work">
+                            <i class="ph ph-arrow-left text-base font-bold"></i>
+                        </button>
+                        <button onclick="nextSlide()" class="w-9 h-9 rounded-lg bg-github-card border border-github-border text-github-text hover:text-white hover:border-github-link hover:bg-github-hover flex items-center justify-center transition-all shadow" title="Next Work">
+                            <i class="ph ph-arrow-right text-base font-bold"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slideshow Container -->
+            <div class="relative w-full rounded-xl overflow-hidden border border-github-border bg-github-card shadow-2xl">
+                <div id="slides-container" class="relative min-h-[360px] sm:min-h-[320px]"></div>
+                <div id="slide-indicators" class="absolute bottom-4 left-0 right-0 flex justify-center gap-2 z-20"></div>
+            </div>
+        </section>
+
+
+        <!-- =============================================================== -->
+        <!-- SECTION 4: SKILLS ARSENAL (CONNECTED TO PROJECTS)               -->
+        <!-- =============================================================== -->
+        <section id="skills" class="mb-14 scroll-mt-20 relative z-10">
+            <div class="mb-6">
+                <h2 class="text-xl sm:text-2xl font-bold text-white flex items-center gap-2.5">
+                    <i class="ph ph-lightning text-yellow-400"></i> Skills Arsenal
+                </h2>
+                <p class="text-xs sm:text-sm text-github-muted mt-0.5">
+                    Hold cursor over any skill to trace its connection line to projects above (one-time interactive link).
+                </p>
+            </div>
+
+            <!-- Skills Grid -->
+            <div id="permanent-skills-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4"></div>
+        </section>
+
+
+        <!-- =============================================================== -->
+        <!-- SECTION 5: CONTACT & GET IN TOUCH                               -->
+        <!-- =============================================================== -->
+        <section id="contact" class="mb-14 scroll-mt-20 relative z-10">
+            <div class="bg-github-card border border-github-border rounded-xl p-6 sm:p-8 text-center max-w-3xl mx-auto shadow-xl relative overflow-hidden">
+                <div class="w-12 h-12 rounded-full bg-github-link/10 border border-github-link/30 text-github-link flex items-center justify-center mx-auto mb-4 text-2xl">
+                    <i class="ph ph-envelope-open"></i>
+                </div>
+
+                <h2 class="text-2xl font-bold text-white mb-2">Let's Build Something Together!</h2>
+                <p class="text-github-muted text-sm sm:text-base mb-6 max-w-lg mx-auto">
+                    Have an internship opportunity, project collaboration, or question? Feel free to reach out directly via email or socials.
+                </p>
+
+                <div class="flex flex-wrap justify-center gap-4 mb-6">
+                    <a href="mailto:navanish.dev@example.com" class="inline-flex items-center gap-2 bg-github-link hover:bg-blue-600 text-white text-sm px-5 py-2.5 rounded-lg font-semibold transition-colors shadow">
+                        <i class="ph ph-envelope-simple text-lg"></i> navanish.dev@example.com
+                    </a>
+
+                    <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 bg-github-border/60 hover:bg-github-border text-white text-sm px-5 py-2.5 rounded-lg font-semibold transition-colors border border-github-border">
+                        <i class="ph ph-linkedin-logo text-lg text-[#0a66c2]"></i> Message on LinkedIn
+                    </a>
+                </div>
+
+                <p class="text-xs text-github-muted">
+                    Based in India • Available for internships & freelance roles
+                </p>
+            </div>
+        </section>
+
+    </main>
+
+
+    <!-- =================================================================== -->
+    <!-- FOOTER                                                              -->
+    <!-- =================================================================== -->
+    <footer class="border-t border-github-border bg-github-card py-6 text-center text-xs text-github-muted">
+        <div class="max-w-6xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-3">
+            <p>© 2026 Navanish (நவனிஷ்). Built with HTML, Vanilla CSS & JS.</p>
+            <div class="flex gap-4">
+                <a href="#about" class="hover:text-github-link transition-colors">Back to Top ↑</a>
+                <a href="https://github.com" target="_blank" class="hover:text-github-link transition-colors">GitHub</a>
+                <a href="https://linkedin.com" target="_blank" class="hover:text-github-link transition-colors">LinkedIn</a>
+            </div>
+        </div>
+    </footer>
+
+
+    <!-- =================================================================== -->
+    <!-- MODAL 1: SIMPLE JOURNEY PROMPT                                      -->
+    <!-- =================================================================== -->
+    <div id="journey-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/75 backdrop-blur-sm hidden opacity-0 transition-opacity duration-300 p-4">
+        <div id="journey-content" class="bg-github-card border border-github-border rounded-xl p-6 max-w-sm w-full shadow-2xl transform scale-95 transition-transform duration-300 relative text-center">
+            
+            <div class="w-12 h-12 bg-github-link/20 text-github-link rounded-full flex items-center justify-center mx-auto mb-3 text-2xl">
+                <i class="ph ph-rocket-launch"></i>
+            </div>
+            
+            <h4 class="text-lg font-bold text-white mb-2">Explore Projects?</h4>
+            <p class="text-github-text text-sm mb-6 leading-relaxed">
+                Ready to check out the projects?
+            </p>
+
+            <div class="flex gap-3 justify-center">
+                <button onclick="handleJourney(false)" class="px-4 py-2 text-xs font-medium rounded-lg border border-github-border text-github-text hover:bg-github-border transition-colors">
+                    Keep Playing
+                </button>
+                <button onclick="handleJourney(true)" class="px-4 py-2 text-xs font-semibold rounded-lg bg-github-link text-white hover:bg-blue-600 transition-colors shadow-md flex items-center gap-1.5">
+                    See Projects <i class="ph ph-arrow-down"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- =================================================================== -->
+    <!-- MODAL 2: PROJECT DETAILS WITH REVOLVING SKILL ORBIT TRACK           -->
+    <!-- =================================================================== -->
+    <div id="project-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/75 backdrop-blur-sm hidden opacity-0 transition-opacity duration-200 p-4">
+        <div id="project-modal-content" class="bg-github-card border border-github-border rounded-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl transform scale-95 transition-transform duration-200 relative p-6">
+            
+            <button onclick="closeProjectModal()" class="absolute top-4 right-4 w-8 h-8 rounded-full bg-github-border/60 hover:bg-github-border text-github-text hover:text-white flex items-center justify-center transition-colors">
+                <i class="ph ph-x text-lg"></i>
+            </button>
+
+            <!-- Revolving Orbit Track around Project Title -->
+            <div class="orbit-container">
+                <div id="modal-orbit-track" class="orbit-track">
+                    <!-- Injected with revolving skill balls -->
+                </div>
+                <h3 id="modal-title" class="text-2xl font-bold text-white relative z-10 flex items-center gap-2 bg-github-card px-3 rounded-md"></h3>
+            </div>
+            
+            <div id="modal-media-container" class="mb-4 rounded-lg overflow-hidden border border-github-border bg-github-bg"></div>
+            <p id="modal-desc" class="text-github-text text-sm sm:text-base leading-relaxed mb-4"></p>
+            <div id="modal-tags" class="flex flex-wrap gap-2 mb-6"></div>
+
+            <div class="flex flex-wrap gap-3 pt-4 border-t border-github-border">
+                <a id="modal-live-link" href="#" target="_blank" class="inline-flex items-center gap-2 bg-github-link hover:bg-blue-600 text-white text-sm px-4 py-2 rounded-lg font-semibold transition-colors">
+                    <i class="ph ph-arrow-square-out text-lg"></i> Live Demo
+                </a>
+                <a id="modal-repo-link" href="#" target="_blank" class="inline-flex items-center gap-2 bg-github-border hover:bg-github-muted/40 text-white text-sm px-4 py-2 rounded-lg font-semibold transition-colors border border-github-border">
+                    <i class="ph ph-github-logo text-lg"></i> View Source Code
+                </a>
+                <button onclick="closeProjectModal()" class="ml-auto text-sm text-github-muted hover:text-white px-3 py-2">
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- =================================================================== -->
+    <!-- JAVASCRIPT: LOGIC & SKILL-TO-PROJECT THREAD / BALL MAPPING          -->
+    <!-- =================================================================== -->
+    <script>
+        /* Skills Mapping to Target Project IDs */
+        const skillsData = [
+            { name: "React", targetProject: "project-campusai", desc: "Hooks, Router & Interactive UI", color: "text-blue-400", border: "#60a5fa", icon: "ph-atom" },
+            { name: "Node.js", targetProject: "project-nalam360", desc: "5+ Full-Stack APIs & Express", color: "text-green-400", border: "#22c55e", icon: "ph-hexagon" },
+            { name: "Java", targetProject: "project-leetcode", desc: "OOPs & Data Structures", color: "text-orange-400", border: "#f97316", icon: "ph-coffee" },
+            { name: "Python", targetProject: "project-campusai", desc: "Automation, OpenCV & Flask", color: "text-yellow-400", border: "#facc15", icon: "ph-file-py" },
+            { name: "MongoDB", targetProject: "project-nalam360", desc: "Schemas, Queries & Aggregation", color: "text-emerald-400", border: "#10b981", icon: "ph-database" },
+            { name: "ESP32", targetProject: "showcase", desc: "Microcontrollers & IoT Hardware", color: "text-red-400", border: "#f87171", icon: "ph-cpu" },
+            { name: "Tailwind", targetProject: "project-nalam360", desc: "Modern Responsive Layouts", color: "text-teal-400", border: "#2dd4bf", icon: "ph-paint-brush" },
+            { name: "C++", targetProject: "project-leetcode", desc: "Algorithms & Competitive Coding", color: "text-indigo-400", border: "#818cf8", icon: "ph-brackets-curly" }
+        ];
+
+        const happyEmojis = ['😎', '🤠', '✨', '🚀', '🔥', '🌟'];
+        const envyEmojis  = ['👀', '😒', '🤨', '🙄', '😤', '😠'];
+
+        let hoveredSkillsSet = new Set();
+        let triggeredSkillsSet = new Set(); // One-time trigger tracker
+        let journeyTriggered = false;
+        let bubblesActive = true;
+        let skillScrollTimeout = null;
+        let returnScrollPosition = 0;
+
+        /* ================================================================== */
+        /* 1. CARD CENTER-ONLY HOVER LOGIC (PREVENT ACCIDENTAL EDGE EXPANSION)*/
+        /* ================================================================== */
+        function initProjectCardHovers() {
+            const cards = document.querySelectorAll('.project-card');
+            cards.forEach(card => {
+                const innerZone = card.querySelector('.card-inner-zone');
+                let enterTimer = null;
+
+                if (!innerZone) return;
+
+                innerZone.addEventListener('mouseenter', () => {
+                    enterTimer = setTimeout(() => {
+                        card.classList.add('active-hover');
+                        const ball = card.querySelector('.docked-skill-ball');
+                        if (ball) ball.classList.add('revealed');
+                    }, 140);
+                });
+
+                innerZone.addEventListener('mouseleave', () => {
+                    if (enterTimer) clearTimeout(enterTimer);
+                    card.classList.remove('active-hover');
+                });
+            });
+        }
+
+        /* ================================================================== */
+        /* 2. SKILL TO PROJECT THREAD & ONE-TIME DOCKED BALL ANIMATION       */
+        /* ================================================================== */
+        function triggerSkillToProjectLink(skillObj, sourceElement) {
+            // Ensure this runs strictly once per skill
+            if (triggeredSkillsSet.has(skillObj.name)) return;
+            triggeredSkillsSet.add(skillObj.name);
+
+            sourceElement.classList.add('skill-card-triggered');
+
+            const targetEl = document.getElementById(skillObj.targetProject);
+            if (!targetEl) return;
+
+            returnScrollPosition = window.scrollY;
+
+            // Draw Curved SVG Thread Line flowing behind content
+            const srcRect = sourceElement.getBoundingClientRect();
+            const tgtRect = targetEl.getBoundingClientRect();
+
+            const startX = srcRect.left + srcRect.width / 2;
+            const startY = srcRect.top + srcRect.height / 2;
+            const endX = tgtRect.left + tgtRect.width / 2;
+            const endY = tgtRect.top + tgtRect.height / 2;
+
+            // Curve bezier path flowing from behind
+            const controlY = (startY + endY) / 2;
+            const pathData = `M ${startX} ${startY} Q ${startX + 80} ${controlY}, ${endX} ${endY}`;
+            
+            const line = document.getElementById('connection-line');
+            line.setAttribute('d', pathData);
+            line.setAttribute('opacity', '1');
+
+            // Launch Flying Orb Animation
+            const orb = document.getElementById('flying-orb');
+            const orbIcon = document.getElementById('flying-orb-icon');
+            const orbText = document.getElementById('flying-orb-text');
+
+            orbIcon.className = `ph ${skillObj.icon} ${skillObj.color} text-lg`;
+            orbText.innerText = skillObj.name;
+            orb.style.borderColor = skillObj.border;
+
+            // Start position at skill element
+            orb.style.left = `${startX - 40}px`;
+            orb.style.top = `${startY - 20}px`;
+            orb.style.opacity = '1';
+            orb.style.transform = 'scale(1)';
+
+            // Fly into project card above
+            requestAnimationFrame(() => {
+                orb.style.left = `${endX - 40}px`;
+                orb.style.top = `${endY - 30}px`;
+                orb.style.transform = 'scale(1.1)';
+            });
+
+            // Smooth scroll up to project
+            targetEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            targetEl.classList.add('highlight-project');
+
+            // Update docked ball
+            const dockedBall = targetEl.querySelector('.docked-skill-ball');
+            if (dockedBall) {
+                const titleSpan = dockedBall.querySelector('.skill-ball-title');
+                if (titleSpan) titleSpan.innerText = `${skillObj.name} Linked`;
+                dockedBall.classList.add('revealed');
+            }
+
+            // Hide flying orb once reached
+            setTimeout(() => {
+                orb.style.opacity = '0';
+                orb.style.transform = 'scale(0)';
+            }, 850);
+
+            // Auto-scroll back after 5 seconds
+            if (skillScrollTimeout) clearTimeout(skillScrollTimeout);
+            skillScrollTimeout = setTimeout(() => {
+                cleanupSkillLink(targetEl);
+            }, 5000);
+        }
+
+        function cleanupSkillLink(targetEl) {
+            const line = document.getElementById('connection-line');
+            if (line) line.setAttribute('opacity', '0');
+            if (targetEl) targetEl.classList.remove('highlight-project');
+            if (returnScrollPosition > 0) {
+                window.scrollTo({ top: returnScrollPosition, behavior: 'smooth' });
+                returnScrollPosition = 0;
+            }
+        }
+
+        // Return scroll when cursor moves downward/away
+        window.addEventListener('mousemove', (e) => {
+            if (returnScrollPosition > 0 && e.clientY > window.innerHeight * 0.85) {
+                if (skillScrollTimeout) clearTimeout(skillScrollTimeout);
+                const highlighted = document.querySelector('.highlight-project');
+                cleanupSkillLink(highlighted);
+            }
+        });
+
+        /* ================================================================== */
+        /* 3. FLOATING BUBBLES GENERATOR                                      */
+        /* ================================================================== */
+        function createSkillBubbles() {
+            if (!bubblesActive) return;
+            const container = document.getElementById('bubbles-layer');
+            container.innerHTML = '';
+
+            skillsData.forEach((skill, index) => {
+                const wrapper = document.createElement('div');
+                wrapper.className = 'bubble-wrapper';
+
+                const isLeft = index % 2 === 0;
+                const animName = isLeft ? 'floatLeftBubble' : 'floatRightBubble';
+                const duration = 22 + (index * 2.5);
+                const delay = -(index * 4.2);
+
+                wrapper.style.animation = `${animName} ${duration}s ease-in-out ${delay}s infinite`;
+
+                const bubble = document.createElement('div');
+                bubble.className = 'skill-bubble px-3.5 py-2';
+                bubble.style.borderColor = '#30363d';
+                bubble.style.maxWidth = '110px';
+
+                const happyEmoji = happyEmojis[index % happyEmojis.length];
+                const envyEmoji  = envyEmojis[index % envyEmojis.length];
+
+                bubble.innerHTML = `
+                    <span class="emoji-indicator absolute -top-3.5 -right-2 text-2xl opacity-0 transform scale-0 transition-all duration-300 pointer-events-none drop-shadow-md z-10">
+                        ${happyEmoji}
+                    </span>
+                    <div class="flex items-center gap-1.5 flex-shrink-0 z-0">
+                        <i class="ph ${skill.icon} text-lg ${skill.color}"></i>
+                        <span class="font-bold text-white text-xs sm:text-sm whitespace-nowrap">${skill.name}</span>
+                    </div>
+                    <div class="skill-details opacity-0 max-w-0 overflow-hidden transition-all duration-300 ease-in-out whitespace-nowrap flex items-center">
+                        <span class="text-xs text-github-text pl-2 ml-2 border-l border-github-border">${skill.desc}</span>
+                    </div>
+                `;
+
+                bubble.addEventListener('mouseenter', () => {
+                    if (!bubblesActive) return;
+
+                    wrapper.style.animationPlayState = 'paused';
+                    wrapper.style.zIndex = '50';
+
+                    const rect = bubble.getBoundingClientRect();
+                    const detailsEl = bubble.querySelector('.skill-details');
+                    const emojiEl = bubble.querySelector('.emoji-indicator');
+
+                    if (window.innerWidth - rect.left < 280) {
+                        bubble.classList.add('flex-row-reverse');
+                        detailsEl.classList.remove('border-l', 'pl-2', 'ml-2');
+                        detailsEl.classList.add('border-r', 'pr-2', 'mr-2');
+                        emojiEl.style.right = 'auto';
+                        emojiEl.style.left = '-8px';
+                    } else {
+                        bubble.classList.remove('flex-row-reverse');
+                        detailsEl.classList.remove('border-r', 'pr-2', 'mr-2');
+                        detailsEl.classList.add('border-l', 'pl-2', 'ml-2');
+                        emojiEl.style.left = 'auto';
+                        emojiEl.style.right = '-8px';
+                    }
+
+                    bubble.style.maxWidth = '320px';
+                    bubble.style.borderColor = skill.border;
+                    bubble.style.boxShadow = `0 0 20px ${skill.border}60`;
+                    detailsEl.style.maxWidth = '200px';
+                    detailsEl.style.opacity = '1';
+
+                    emojiEl.innerText = happyEmoji;
+                    emojiEl.style.opacity = '1';
+                    emojiEl.style.transform = 'scale(1.2) translateY(-4px)';
+
+                    hoveredSkillsSet.add(skill.name);
+
+                    document.querySelectorAll('.skill-bubble').forEach(other => {
+                        if (other !== bubble) {
+                            other.classList.add('bubble-shaky');
+                            const otherEmoji = other.querySelector('.emoji-indicator');
+                            otherEmoji.innerText = envyEmoji;
+                            otherEmoji.style.opacity = '1';
+                            otherEmoji.style.transform = 'scale(1.1) translateY(-3px)';
+
+                            const otherWrapper = other.parentElement;
+                            if (otherWrapper.getAnimations) {
+                                otherWrapper.getAnimations().forEach(a => a.playbackRate = 3.5);
+                            }
+                        }
+                    });
+
+                    if (hoveredSkillsSet.size >= 3 && !journeyTriggered) {
+                        setTimeout(triggerJourneyModal, 600);
+                    }
+                });
+
+                bubble.addEventListener('mouseleave', () => {
+                    if (!bubblesActive) return;
+
+                    wrapper.style.animationPlayState = 'running';
+                    wrapper.style.zIndex = '25';
+
+                    bubble.style.maxWidth = '110px';
+                    bubble.style.borderColor = '#30363d';
+                    bubble.style.boxShadow = '0 4px 20px rgba(0, 0, 0, 0.4)';
+
+                    const detailsEl = bubble.querySelector('.skill-details');
+                    detailsEl.style.maxWidth = '0';
+                    detailsEl.style.opacity = '0';
+
+                    const emojiEl = bubble.querySelector('.emoji-indicator');
+                    emojiEl.style.opacity = '0';
+                    emojiEl.style.transform = 'scale(0)';
+
+                    document.querySelectorAll('.skill-bubble').forEach(other => {
+                        other.classList.remove('bubble-shaky');
+                        other.style.borderColor = '#30363d';
+                        other.style.boxShadow = '0 4px 20px rgba(0, 0, 0, 0.4)';
+
+                        const otherEmoji = other.querySelector('.emoji-indicator');
+                        otherEmoji.style.opacity = '0';
+                        otherEmoji.style.transform = 'scale(0)';
+
+                        const otherWrapper = other.parentElement;
+                        if (otherWrapper.getAnimations) {
+                            otherWrapper.getAnimations().forEach(a => a.playbackRate = 1);
+                        }
+                    });
+                });
+
+                wrapper.appendChild(bubble);
+                container.appendChild(wrapper);
+            });
+        }
+
+        /* ================================================================== */
+        /* 4. JOURNEY MODAL & POPPING LOGIC                                   */
+        /* ================================================================== */
+        function triggerJourneyModal() {
+            journeyTriggered = true;
+            document.querySelectorAll('.bubble-wrapper').forEach(w => w.style.animationPlayState = 'paused');
+
+            const modal = document.getElementById('journey-modal');
+            const content = document.getElementById('journey-content');
+            modal.classList.remove('hidden');
+            setTimeout(() => {
+                modal.classList.remove('opacity-0');
+                content.classList.remove('scale-95');
+                content.classList.add('scale-100');
+            }, 10);
+        }
+
+        function handleJourney(wantsToJump) {
+            const modal = document.getElementById('journey-modal');
+            const content = document.getElementById('journey-content');
+
+            modal.classList.add('opacity-0');
+            content.classList.remove('scale-100');
+            content.classList.add('scale-95');
+
+            setTimeout(() => {
+                modal.classList.add('hidden');
+
+                if (wantsToJump) {
+                    bubblesActive = false;
+                    document.querySelectorAll('.skill-bubble').forEach(b => b.classList.add('bubble-bursting'));
+
+                    setTimeout(() => {
+                        document.getElementById('bubbles-layer').innerHTML = '';
+                        
+                        const projSection = document.getElementById('projects');
+                        projSection.scrollIntoView({ behavior: 'smooth' });
+
+                        const firstCard = document.getElementById('project-campusai');
+                        if (firstCard) {
+                            firstCard.classList.add('highlight-project');
+                            setTimeout(() => firstCard.classList.remove('highlight-project'), 3800);
+                        }
+                    }, 400);
+                } else {
+                    document.querySelectorAll('.bubble-wrapper').forEach(w => {
+                        if (w.getAnimations) w.getAnimations().forEach(a => a.playbackRate = 1);
+                        w.style.animationPlayState = 'running';
+                    });
+                }
+            }, 300);
+        }
+
+        /* ================================================================== */
+        /* 5. PERMANENT SKILLS GRID RENDERER (INTENT HOVER DELAY & 1-TIME)   */
+        /* ================================================================== */
+        function renderPermanentSkills() {
+            const grid = document.getElementById('permanent-skills-grid');
+            if (!grid) return;
+            grid.innerHTML = '';
+
+            skillsData.forEach(skill => {
+                const card = document.createElement('div');
+                card.className = 'bg-github-card border border-github-border rounded-xl p-4 flex items-center gap-3.5 hover:border-github-link/60 hover:bg-github-hover transition-all cursor-pointer group';
+                card.innerHTML = `
+                    <div class="w-10 h-10 rounded-lg bg-github-bg border border-github-border flex items-center justify-center ${skill.color} text-xl flex-shrink-0 shadow-sm group-hover:scale-110 transition-transform">
+                        <i class="ph ${skill.icon}"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold text-white text-sm flex items-center gap-1">
+                            ${skill.name} <i class="ph ph-arrow-up-right text-xs opacity-0 group-hover:opacity-100 text-github-link transition-opacity"></i>
+                        </h4>
+                        <p class="text-xs text-github-muted">${skill.desc}</p>
+                    </div>
+                `;
+
+                // Hover Intent Delay (450ms): Prevents accidental trigger when mouse sweeps across
+                let hoverIntentTimer = null;
+
+                card.addEventListener('mouseenter', () => {
+                    if (triggeredSkillsSet.has(skill.name)) return; // One-time only
+
+                    hoverIntentTimer = setTimeout(() => {
+                        triggerSkillToProjectLink(skill, card);
+                    }, 450);
+                });
+
+                card.addEventListener('mouseleave', () => {
+                    if (hoverIntentTimer) clearTimeout(hoverIntentTimer);
+                });
+
+                grid.appendChild(card);
+            });
+        }
+
+        /* ================================================================== */
+        /* 6. FEATURED SHOWCASE SLIDESHOW (PHOTOS & VIDEOS)                   */
+        /* ================================================================== */
+        const showcaseData = [
+            {
+                title: "ESP32 Real-Time Notes Taker",
+                desc: "A smart IoT hardware device utilizing ESP32 microcontroller to capture, digitize, and sync physical notes to the cloud via WebSockets.",
+                img: "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=800&q=80",
+                isVideo: false,
+                videoUrl: "", 
+                tags: ["IoT", "ESP32", "Hardware", "C++", "WebSockets"],
+                link: "https://github.com"
+            },
+            {
+                title: "LinkedIn Post Saver & Organizer",
+                desc: "A custom browser extension designed to instantly bookmark, categorize, and export insightful LinkedIn posts for offline reference.",
+                img: "https://images.unsplash.com/photo-1616469829941-c7200edec809?auto=format&fit=crop&w=800&q=80",
+                isVideo: false,
+                videoUrl: "",
+                tags: ["Chrome Extension", "JavaScript", "Storage API"],
+                link: "https://github.com"
+            },
+            {
+                title: "Laptop Movement & Theft Detection",
+                desc: "An automated security tool leveraging built-in device sensors and camera to detect unauthorized movement and dispatch instant alerts.",
+                img: "https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&w=800&q=80",
+                isVideo: false,
+                videoUrl: "",
+                tags: ["Python", "OpenCV", "Security", "SMTP"],
+                link: "https://github.com"
+            },
+            {
+                title: "Fast YouTube Clip Trimmer",
+                desc: "A lightweight client-side web utility to quickly select, trim timestamps, and download video portions without heavy desktop editors.",
+                img: "https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?auto=format&fit=crop&w=800&q=80",
+                isVideo: false,
+                videoUrl: "",
+                tags: ["Web App", "FFmpeg WASM", "TailwindCSS"],
+                link: "https://github.com"
+            },
+            {
+                title: "Interactive Keyboard Shortcuts Navigator",
+                desc: "A desktop productivity overlay that dynamically detects active window software and displays contextual keyboard shortcuts.",
+                img: "https://images.unsplash.com/photo-1587829741301-dc798b83add3?auto=format&fit=crop&w=800&q=80",
+                isVideo: false,
+                videoUrl: "",
+                tags: ["Electron", "JavaScript", "Productivity"],
+                link: "https://github.com"
+            }
+        ];
+
+        let currentSlide = 0;
+        let slideInterval = null;
+
+        function initShowcase() {
+            const container = document.getElementById('slides-container');
+            const indicators = document.getElementById('slide-indicators');
+            
+            if (!container || !indicators) return;
+
+            container.innerHTML = '';
+            indicators.innerHTML = '';
+
+            showcaseData.forEach((slide, index) => {
+                const slideEl = document.createElement('div');
+                slideEl.className = `absolute inset-0 transition-opacity duration-700 ease-in-out flex flex-col md:flex-row ${index === 0 ? 'opacity-100 z-10' : 'opacity-0 z-0 pointer-events-none'}`;
+                slideEl.id = `slide-${index}`;
+
+                const tagsHtml = slide.tags.map(t => `<span class="text-xs bg-github-bg border border-github-border rounded-full px-3 py-1 text-github-text">${t}</span>`).join('');
+
+                let mediaHtml = '';
+                if (slide.isVideo && slide.videoUrl) {
+                    mediaHtml = `
+                        <div class="video-container w-full h-full">
+                            <iframe src="${slide.videoUrl}" allowfullscreen></iframe>
+                        </div>
+                    `;
+                } else {
+                    mediaHtml = `
+                        <img src="${slide.img}" alt="${slide.title}" class="w-full h-full object-cover opacity-90 hover:scale-105 transition-transform duration-700">
+                    `;
+                }
+
+                slideEl.innerHTML = `
+                    <div class="w-full md:w-3/5 h-48 md:h-full relative overflow-hidden bg-github-bg border-b md:border-b-0 md:border-r border-github-border">
+                        ${mediaHtml}
+                    </div>
+                    <div class="w-full md:w-2/5 p-6 sm:p-8 flex flex-col justify-center bg-github-card">
+                        <span class="text-xs text-github-link font-mono uppercase tracking-wider mb-1">Featured Highlight</span>
+                        <h3 class="text-xl sm:text-2xl font-bold text-white mb-3 leading-snug">${slide.title}</h3>
+                        <p class="text-github-text text-xs sm:text-sm leading-relaxed mb-5">${slide.desc}</p>
+                        <div class="flex flex-wrap gap-2 mb-6">${tagsHtml}</div>
+                        <div>
+                            <a href="${slide.link}" target="_blank" class="inline-flex items-center gap-1.5 text-xs font-semibold text-github-link hover:underline">
+                                Explore Project Details <i class="ph ph-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(slideEl);
+
+                const dot = document.createElement('button');
+                dot.className = `h-1.5 rounded-full transition-all duration-300 ${index === 0 ? 'w-8 bg-github-link' : 'w-3 bg-github-border hover:bg-github-muted'}`;
+                dot.setAttribute('aria-label', `Go to slide ${index + 1}`);
+                dot.onclick = () => goToSlide(index);
+                indicators.appendChild(dot);
+            });
+
+            startAutoSlide();
+
+            const showcaseEl = document.getElementById('showcase');
+            if (showcaseEl) {
+                showcaseEl.addEventListener('mouseenter', stopAutoSlide);
+                showcaseEl.addEventListener('mouseleave', startAutoSlide);
+            }
+        }
+
+        function goToSlide(index) {
+            const slides = document.getElementById('slides-container').children;
+            const dots = document.getElementById('slide-indicators').children;
+            if (!slides.length) return;
+
+            slides[currentSlide].classList.remove('opacity-100', 'z-10');
+            slides[currentSlide].classList.add('opacity-0', 'z-0', 'pointer-events-none');
+            dots[currentSlide].classList.remove('w-8', 'bg-github-link');
+            dots[currentSlide].classList.add('w-3', 'bg-github-border');
+
+            currentSlide = index;
+
+            slides[currentSlide].classList.remove('opacity-0', 'z-0', 'pointer-events-none');
+            slides[currentSlide].classList.add('opacity-100', 'z-10');
+            dots[currentSlide].classList.remove('w-3', 'bg-github-border');
+            dots[currentSlide].classList.add('w-8', 'bg-github-link');
+        }
+
+        function nextSlide() { goToSlide((currentSlide + 1) % showcaseData.length); }
+        function prevSlide() { goToSlide((currentSlide - 1 + showcaseData.length) % showcaseData.length); }
+        function startAutoSlide() { if (slideInterval) clearInterval(slideInterval); slideInterval = setInterval(nextSlide, 4500); }
+        function stopAutoSlide() { if (slideInterval) clearInterval(slideInterval); }
+
+        /* ================================================================== */
+        /* 7. PROJECT MODAL POPUP & REVOLVING SKILL ORBITS                    */
+        /* ================================================================== */
+        function openProjectModal(title, description, mediaUrl, repoUrl, liveUrl, tags) {
+            const modal = document.getElementById('project-modal');
+            const content = document.getElementById('project-modal-content');
+            
+            document.getElementById('modal-title').innerText = title;
+            document.getElementById('modal-desc').innerText = description;
+            
+            // Build Revolving Orbiting Skill Balls around the Modal
+            const orbitTrack = document.getElementById('modal-orbit-track');
+            orbitTrack.innerHTML = '';
+            tags.forEach((tag, idx) => {
+                const ball = document.createElement('div');
+                ball.className = 'orbit-ball';
+                ball.innerHTML = `⚡ ${tag}`;
+                orbitTrack.appendChild(ball);
+            });
+
+            const mediaContainer = document.getElementById('modal-media-container');
+            if (mediaUrl.endsWith('.mp4') || mediaUrl.includes('youtube.com') || mediaUrl.includes('youtu.be')) {
+                if (mediaUrl.includes('youtube.com') || mediaUrl.includes('youtu.be')) {
+                    mediaContainer.innerHTML = `
+                        <div class="video-container">
+                            <iframe src="${mediaUrl}" allowfullscreen></iframe>
+                        </div>
+                    `;
+                } else {
+                    mediaContainer.innerHTML = `
+                        <video controls class="w-full max-h-72 object-cover">
+                            <source src="${mediaUrl}" type="video/mp4">
+                            Your browser does not support HTML5 video.
+                        </video>
+                    `;
+                }
+            } else {
+                mediaContainer.innerHTML = `
+                    <img src="${mediaUrl}" alt="${title} Preview" class="w-full max-h-72 object-cover">
+                `;
+            }
+
+            const tagsContainer = document.getElementById('modal-tags');
+            tagsContainer.innerHTML = tags.map(t => `<span class="tech-badge text-xs px-2.5 py-1 rounded font-mono">${t}</span>`).join('');
+
+            document.getElementById('modal-repo-link').href = repoUrl || 'https://github.com';
+            document.getElementById('modal-live-link').href = liveUrl || '#';
+
+            modal.classList.remove('hidden');
+            setTimeout(() => {
+                modal.classList.remove('opacity-0');
+                content.classList.remove('scale-95');
+                content.classList.add('scale-100');
+            }, 10);
+        }
+
+        function closeProjectModal() {
+            const modal = document.getElementById('project-modal');
+            const content = document.getElementById('project-modal-content');
+            
+            modal.classList.add('opacity-0');
+            content.classList.remove('scale-100');
+            content.classList.add('scale-95');
+            
+            setTimeout(() => {
+                modal.classList.add('hidden');
+                document.getElementById('modal-media-container').innerHTML = '';
+            }, 200);
+        }
+
+        window.addEventListener('click', (e) => {
+            const modal = document.getElementById('project-modal');
+            if (e.target === modal) closeProjectModal();
+        });
+
+        // Initialize Everything on Load
+        document.addEventListener('DOMContentLoaded', () => {
+            initProjectCardHovers();
+            createSkillBubbles();
+            renderPermanentSkills();
+            initShowcase();
+        });
+    </script>
+</body>
+</html>
